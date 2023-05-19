@@ -41,14 +41,16 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0",
-    "jp.hadashikick.vcontainer": "1.13.2"
+    "jp.hadashikick.vcontainer": "1.13.2",
+    "com.cysharp.unitask": "2.3.3"
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "jp.hadashikick.vcontainer"
+        "jp.hadashikick.vcontainer",
+        "com.cysharp"
       ]
     }
   ]
