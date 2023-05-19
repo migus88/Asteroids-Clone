@@ -1,11 +1,11 @@
 {
-    "name": "Migs.Asteroids.Core",
-    "rootNamespace": "Migs.Asteroids.Core",
+    "name": "Migs.Asteroids.Test",
+    "rootNamespace": "Migs.Asteroids.Test",
     "references": [
         "Unity.Addressables",
-        "Unity.ResourceManager",
         "UniTask",
-        "VContainer"
+        "VContainer",
+        "Migs.Asteroids.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

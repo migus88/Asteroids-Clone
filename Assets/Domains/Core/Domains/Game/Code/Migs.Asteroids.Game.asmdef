@@ -5,7 +5,8 @@
         "Unity.Addressables",
         "UniTask",
         "VContainer",
-        "Migs.Asteroids.Core"
+        "Migs.Asteroids.Core",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
