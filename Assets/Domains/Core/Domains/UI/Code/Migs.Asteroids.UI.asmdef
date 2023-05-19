@@ -1,0 +1,19 @@
+{
+    "name": "Migs.Asteroids.UI",
+    "rootNamespace": "Migs.Asteroids.UI",
+    "references": [
+        "Unity.Addressables",
+        "UniTask",
+        "VContainer",
+        "Migs.Asteroids.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
