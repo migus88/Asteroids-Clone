@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Migs.Asteroids.Game.Data
 {
@@ -10,5 +11,13 @@ namespace Migs.Asteroids.Game.Data
         public float Size;
         public float Speed;
         public int Points;
+        public RespawnData[] RespawnedAsteroidsData;
+        
+        [Serializable]
+        public struct RespawnData
+        {
+            public int Level;
+            public float RotationAngle;
+        }
     }
 }

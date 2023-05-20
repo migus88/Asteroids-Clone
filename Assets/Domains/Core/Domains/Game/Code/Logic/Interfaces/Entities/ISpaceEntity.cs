@@ -12,7 +12,9 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
         Vector3 Position { get; set; }
         Quaternion Rotation { get; }
         Bounds Bounds { get; }
+        
+        void Explode();
     }
     
-    public delegate void SpaceEntityCollision(ISpaceEntity self, ISpaceEntity other);
+    public delegate void SpaceEntityCollision(ISpaceEntity self);
 }

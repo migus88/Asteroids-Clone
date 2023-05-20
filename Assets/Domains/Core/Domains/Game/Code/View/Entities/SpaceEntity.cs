@@ -25,18 +25,9 @@ namespace Migs.Asteroids.Game.View.Entities
         [field:SerializeField] protected Renderer ViewRenderer { get; set; }
         [field:SerializeField] protected Transform ViewTransform { get; set; }
         
+        // Collision Matrix making sure that only things that should actually collide with each other are colliding
+        protected virtual void OnTriggerEnter(Collider other) => Collided?.Invoke(this);
 
-        protected virtual void OnTriggerEnter(Collider other)
-        {
-            var collidableEntity = other.GetComponent<ISpaceEntity>();
-
-            if (collidableEntity == null)
-            {
-                Debug.LogWarning("If you see this, then something is incorrectly configured in collision matrix - go fix it");
-                return;
-            }
-            
-            Collided?.Invoke(this, collidableEntity);
-        }
+        public virtual void Explode() { }
     }
 }

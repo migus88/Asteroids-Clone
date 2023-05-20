@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using UnityEngine;
 
@@ -27,9 +28,10 @@ namespace Migs.Asteroids.Game.View.Entities
             ViewTransform.Rotate(new Vector3(0, rotationAmount, 0));
         }
 
-        public void Die()
+        public override void Explode()
         {
-            //TODO Implement
+            // TODO: Particles
+            gameObject.SetActive(false);
         }
     }
 }

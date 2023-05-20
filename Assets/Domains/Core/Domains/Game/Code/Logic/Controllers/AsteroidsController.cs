@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Settings;
@@ -29,16 +30,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         {
             await _asteroidsService.Preload(10);
             
-            var asteroid = _asteroidsService.GetAvailableAsteroid();
-            asteroid.Spawn(new Vector3(2,0,2), new Vector3(0f, 0, 1f), _asteroidSettings.AsteroidLevels[0].Size, _asteroidSettings.AsteroidLevels[0].Speed);
-            _asteroids.Add(asteroid);
-            
-            
-            var asteroid2 = _asteroidsService.GetAvailableAsteroid();
-            asteroid2.Spawn(new Vector3(-2,0,-2), new Vector3(-1, 0, -1), _asteroidSettings.AsteroidLevels[1].Size, _asteroidSettings.AsteroidLevels[1].Speed);
-            _asteroids.Add(asteroid2);
-
-            _asteroids.ForEach(a => a.Collided += OnAsteroidCollision);
+            SpawnAsteroid(0, new Vector3(2,0,2), new Vector3(1f, 0, 1f));
+            SpawnAsteroid(1, new Vector3(-2,0,-2), new Vector3(-1, 0, -1));
         }
 
         public void Tick()
@@ -51,9 +44,40 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             
         }
 
-        private void OnAsteroidCollision(ISpaceEntity self, ISpaceEntity other)
+        private void OnAsteroidCollision(ISpaceEntity self)
         {
-            Debug.Log($"Boom!");
+            var asteroid = (IAsteroid)self;
+            DestroyAsteroid(asteroid);
+
+            if (asteroid.Data.RespawnedAsteroidsData == null || asteroid.Data.RespawnedAsteroidsData.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var respawnData in asteroid.Data.RespawnedAsteroidsData)
+            {
+                var updatedRotation = asteroid.Rotation * Quaternion.Euler(0, respawnData.RotationAngle, 0);
+                var direction = updatedRotation * Vector3.forward;
+                
+                SpawnAsteroid(respawnData.Level, asteroid.Position, direction);
+            }
+        }
+
+        private void DestroyAsteroid(IAsteroid asteroid)
+        {
+            asteroid.Collided -= OnAsteroidCollision;
+            _asteroids.Remove(asteroid);
+
+            asteroid.Explode();
+            _asteroidsService.ReturnAsteroid(asteroid);
+        }
+
+        private void SpawnAsteroid(int level, Vector3 position, Vector3 direction)
+        {
+            var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
+            respawnedAsteroid.Collided += OnAsteroidCollision;
+            respawnedAsteroid.Spawn(_asteroidSettings.AsteroidLevels[level], position, direction);
+            _asteroids.Add(respawnedAsteroid);
         }
 
         public void Dispose()

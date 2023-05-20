@@ -1,3 +1,4 @@
+using System;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Handlers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
@@ -7,7 +8,7 @@ using VContainer.Unity;
 
 namespace Migs.Asteroids.Game.Logic.Controllers
 {
-    public class PlayerController : ITickable, IFixedTickable
+    public class PlayerController : ITickable, IFixedTickable, IDisposable
     {
         private readonly IPlayer _player;
         private readonly IPlayerInputService _inputService;
@@ -24,6 +25,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _spaceNavigationService = spaceNavigationService;
 
             _player.SetDrag(_playerSettings.VelocityDropRate);
+            _player.Collided += OnCollision;
         }
 
         public void Tick()
@@ -37,6 +39,11 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         public void FixedTick()
         {
             Thrust();   
+        }
+
+        private void OnCollision(ISpaceEntity self)
+        {
+            _player.Explode();
         }
 
         private void Rotate()
@@ -57,6 +64,11 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             }
             
             _player.AddForce(_playerSettings.ThrustersForce);
+        }
+
+        public void Dispose()
+        {
+            _player.Collided -= OnCollision;
         }
     }
 }
