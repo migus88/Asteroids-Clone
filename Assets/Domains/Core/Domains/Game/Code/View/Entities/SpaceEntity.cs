@@ -11,6 +11,7 @@ namespace Migs.Asteroids.Game.View.Entities
         public Vector3 Velocity => Rigidbody.velocity;
         public Vector3 Direction => ViewTransform.TransformDirection(Vector3.forward);
         public Vector3 Position => transform.position;
+        public Quaternion Rotation => transform.rotation;
 
         [field:SerializeField] protected Rigidbody Rigidbody { get; set; }
         [field:SerializeField] protected Transform ViewTransform { get; set; }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   <RotationSpeed>k__BackingField: 300
-  <MaxVelocity>k__BackingField: 50
-  <ThrustersForce>k__BackingField: 5
-  <VelocityDropRate>k__BackingField: 1
+  <MaxVelocity>k__BackingField: 500
+  <ThrustersForce>k__BackingField: 50
+  <VelocityDropRate>k__BackingField: 10
