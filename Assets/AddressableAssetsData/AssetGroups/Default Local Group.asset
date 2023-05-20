@@ -25,6 +25,10 @@ MonoBehaviour:
     m_Address: TestScene
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bc7b798f17ccc46ab8e1151ef97986b3
+    m_Address: Asteroid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8017e1f92835b488aa1403b1b8024188, type: 2}
   m_SchemaSet:

@@ -1,6 +1,7 @@
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Input;
 using Migs.Asteroids.Game.Logic.Controllers;
+using Migs.Asteroids.Game.Logic.Handlers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Services;
 using Migs.Asteroids.Game.Logic.Services.Interfaces;
@@ -17,8 +18,9 @@ namespace Migs.Asteroids.Game.Logic
     {
         [SerializeField] private Player _player;
         [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private AsteroidSettings _asteroidSettings;
         [SerializeField] private ViewportService _viewportService;
-        
+        [SerializeField] private AsteroidsService _asteroidsService;
 
         private ICrossDomainServiceRegistrar _registrar;
         
@@ -28,13 +30,19 @@ namespace Migs.Asteroids.Game.Logic
             _registrar.RegisterService<IPlayerInputService, PlayerInputService>(builder, this);
 
             builder.Register<DefaultGameplayInput>(Lifetime.Singleton);
+            builder.Register<ISpaceNavigationService, SpaceNavigationService>(Lifetime.Singleton);
+            
             builder.RegisterComponent<IPlayer>(_player);
             builder.RegisterComponent<IViewportService>(_viewportService);
+            builder.RegisterComponent<IAsteroidsService>(_asteroidsService);
+
             builder.RegisterInstance(_playerSettings);
+            builder.RegisterInstance(_asteroidSettings);
             
             builder.UseEntryPoints(Lifetime.Singleton, entryPoints =>
             {
                 entryPoints.Add<PlayerController>();
+                entryPoints.Add<AsteroidsController>();
             });
         }
 

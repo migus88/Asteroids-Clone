@@ -8,6 +8,8 @@ namespace Migs.Asteroids.Game.View.Entities
     [RequireComponent(typeof(Rigidbody))]
     public abstract class SpaceEntity : MonoBehaviour, ISpaceEntity
     {
+        public event SpaceEntityCollision Collided;
+        
         public Vector3 Velocity => Rigidbody.velocity;
         public Vector3 Direction => ViewTransform.TransformDirection(Vector3.forward);
         public Quaternion Rotation => transform.rotation;
@@ -22,5 +24,19 @@ namespace Migs.Asteroids.Game.View.Entities
         [field:SerializeField] protected Rigidbody Rigidbody { get; set; }
         [field:SerializeField] protected Renderer ViewRenderer { get; set; }
         [field:SerializeField] protected Transform ViewTransform { get; set; }
+        
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            var collidableEntity = other.GetComponent<ISpaceEntity>();
+
+            if (collidableEntity == null)
+            {
+                Debug.LogWarning("If you see this, then something is incorrectly configured in collision matrix - go fix it");
+                return;
+            }
+            
+            Collided?.Invoke(this, collidableEntity);
+        }
     }
 }

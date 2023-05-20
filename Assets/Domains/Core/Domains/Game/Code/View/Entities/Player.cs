@@ -5,10 +5,6 @@ namespace Migs.Asteroids.Game.View.Entities
 {
     public class Player : SpaceEntity, IPlayer
     {
-        public Bounds Bounds => _renderer.bounds;
-
-        [SerializeField] private Renderer _renderer;
-
         public void Teleport(Vector3 position)
         {
             transform.position = position;

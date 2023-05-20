@@ -3,6 +3,7 @@
     "rootNamespace": "Migs.Asteroids.Game",
     "references": [
         "Unity.Addressables",
+        "Unity.ResourceManager",
         "UniTask",
         "VContainer",
         "Migs.Asteroids.Core",
