@@ -1,3 +1,4 @@
+using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Utils;
 using UnityEngine;
@@ -19,12 +20,12 @@ namespace Migs.Asteroids.Game.View.Services
             return viewportRect.Overlaps(objectRect);
         }
         
-        public (Vector2 BottomLeft, Vector2 TopRight) GetScreenEdges()
+        public Rectangle GetScreenArea()
         {
             var bottomLeft = _camera.ScreenToWorldPoint(new Vector3(0, 0, _camera.nearClipPlane));
             var topRight = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.nearClipPlane));
 
-            return (bottomLeft.ToPosition2D(), topRight.ToPosition2D());
+            return new Rectangle(bottomLeft.ToPosition2D(), topRight.ToPosition2D());
         }
     }
 }

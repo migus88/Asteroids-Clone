@@ -7,7 +7,8 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
     {
         Vector3 Velocity { get; }
         Vector3 Direction { get; }
-        Vector3 Position { get; }
+        Vector3 Position { get; set; }
         Quaternion Rotation { get; }
+        Bounds Bounds { get; }
     }
 }

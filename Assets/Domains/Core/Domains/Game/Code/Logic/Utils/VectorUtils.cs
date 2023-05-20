@@ -1,3 +1,4 @@
+using Migs.Asteroids.Game.Data;
 using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Utils
@@ -8,7 +9,7 @@ namespace Migs.Asteroids.Game.Logic.Utils
 
         public static Vector3 ToRealPosition(this Vector2 position2D) => new(position2D.x, 0, position2D.y);
         
-        public static Vector3 WrapPosition(Vector3 currentPosition, Bounds objectBounds, Vector2 bottomLeft, Vector2 topRight)
+        public static Vector3 WrapPosition(Vector3 currentPosition, Bounds objectBounds, Rectangle area)
         {
             const float half = 0.5f;
             var halfWidth = objectBounds.size.x * half;
@@ -16,22 +17,22 @@ namespace Migs.Asteroids.Game.Logic.Utils
             
             var newPosition = currentPosition.ToPosition2D();
 
-            if (newPosition.x > topRight.x)
+            if (newPosition.x > area.MaxX)
             {
-                newPosition.x = bottomLeft.x - halfWidth;
+                newPosition.x = area.MinX - halfWidth;
             }
-            else if (newPosition.x < bottomLeft.x)
+            else if (newPosition.x < area.MinX)
             {
-                newPosition.x = topRight.x + halfWidth;
+                newPosition.x = area.MaxX + halfWidth;
             }
         
-            if (newPosition.y > topRight.y)
+            if (newPosition.y > area.MaxY)
             {
-                newPosition.y = bottomLeft.y - halfHeight;
+                newPosition.y = area.MinY - halfHeight;
             }
-            else if (newPosition.y < bottomLeft.y)
+            else if (newPosition.y < area.MinY)
             {
-                newPosition.y = topRight.y + halfHeight;
+                newPosition.y = area.MaxY + halfHeight;
             }
 
             return newPosition.ToRealPosition();
