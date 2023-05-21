@@ -2,6 +2,7 @@ using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Utils;
+using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Handlers
 {
@@ -22,7 +23,14 @@ namespace Migs.Asteroids.Game.Logic.Handlers
         {
             _gameArea = _viewportService.GetScreenArea();
         }
-        
+
+        public Vector3 GetRandomPlaceInGameArea()
+        {
+            var x = Random.Range(_gameArea.MinX, _gameArea.MaxX);
+            var z = Random.Range(_gameArea.MinY, _gameArea.MaxY);
+            return new Vector3(x, 0, z);
+        }
+
         public void WrapAroundGameArea(ISpaceEntity entity)
         {
             var isVisible = _viewportService.IsVisibleInViewport(entity.Bounds);

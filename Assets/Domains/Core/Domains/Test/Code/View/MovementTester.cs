@@ -18,17 +18,17 @@ namespace Domains.Core.Domains.Test.Code.View
 
         public void Tick()
         {
-            if (_playerInputService.IsRotationAxisPressed)
+            if (_playerInputService.IsRotationButtonPressed)
             {
                 Debug.Log(_playerInputService.RotationAxis);
             }
 
-            if (_playerInputService.IsAccelerationPressed)
+            if (_playerInputService.IsAccelerationButtonPressed)
             {
                 Debug.Log("Acceleration");
             }
 
-            if (_playerInputService.IsHyperspacePressed)
+            if (_playerInputService.IsHyperspaceButtonPressed)
             {
                 Debug.Log("Hyperspace");
             }

@@ -11,6 +11,7 @@ namespace Migs.Asteroids.Game.Logic.Settings
         [field:SerializeField] public float ThrustersForce { get; set; }
         [field:SerializeField] public float MaxVelocity { get; set; }
         [field:SerializeField] public float VelocityDropRate { get; set; }
+        [field:SerializeField] public int HyperspaceDurationInSeconds { get; set; }
         
         [field:Header("Shooting")]
         [field:SerializeField] public float FireRate { get; set; }

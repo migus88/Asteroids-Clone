@@ -21,6 +21,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private bool _shouldAddForce = false;
         private float _timeSinceLastShot = 0;
+        private bool _isEnabled = true;
 
         public PlayerController(IPlayer player, IPlayerInputService inputService, PlayerSettings playerSettings,
             ProjectileSettings projectileSettings, ISpaceNavigationService spaceNavigationService,
@@ -44,9 +45,15 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public void Tick()
         {
+            if (!_isEnabled)
+            {
+                return;
+            }
+            
             HandleMovement();
             Rotate();
             Shoot();
+            HandleHyperspace();
 
             _spaceNavigationService.WrapAroundGameArea(_player);
         }
@@ -58,14 +65,36 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void OnCollision(ISpaceEntity self)
         {
+            _isEnabled = false;
             _player.Explode();
+        }
+
+        private void HandleHyperspace()
+        {
+            if (!_inputService.IsHyperspaceButtonPressStarted)
+            {
+                return;
+            }
+
+            _isEnabled = false;
+            HyperspaceJump().Forget();
+        }
+
+        private async UniTaskVoid HyperspaceJump()
+        {
+            _player.Stop();
+            _player.Hide();
+            _player.Position = _spaceNavigationService.GetRandomPlaceInGameArea();
+            await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * 1000);
+            _player.Show();
+            _isEnabled = true;
         }
 
         private void Shoot()
         {
             _timeSinceLastShot += Time.deltaTime;
 
-            if (!_inputService.IsShootingPressed || _timeSinceLastShot < _playerSettings.FireRate)
+            if (!_inputService.IsShootingButtonPressStarted || _timeSinceLastShot < _playerSettings.FireRate)
             {
                 return;
             }
@@ -83,14 +112,16 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void Rotate()
         {
-            if (_inputService.IsRotationAxisPressed)
+            if (!_inputService.IsRotationButtonPressed)
             {
-                _player.Rotate(_inputService.RotationAxis, _playerSettings.RotationSpeed);
+                return;
             }
+            
+            _player.Rotate(_inputService.RotationAxis, _playerSettings.RotationSpeed);
         }
 
         private void HandleMovement() =>
-            _shouldAddForce = _inputService.IsAccelerationPressed &&
+            _shouldAddForce = _inputService.IsAccelerationButtonPressed &&
                               _player.ForwardVelocity < _playerSettings.MaxVelocity;
 
         private void Thrust()

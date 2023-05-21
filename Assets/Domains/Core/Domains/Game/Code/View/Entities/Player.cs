@@ -10,11 +10,22 @@ namespace Migs.Asteroids.Game.View.Entities
 
         [SerializeField] private Transform _projectileParent;
 
-        public void Teleport(Vector3 position)
+
+        public void Stop()
         {
-            transform.position = position;
+            Rigidbody.velocity = Vector3.zero;
         }
 
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+        
         public void SetDrag(float amount)
         {
             Rigidbody.drag = amount;

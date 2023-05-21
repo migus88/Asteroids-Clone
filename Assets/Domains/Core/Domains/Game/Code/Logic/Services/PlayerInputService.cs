@@ -10,10 +10,13 @@ namespace Migs.Asteroids.Game.Logic.Services
     internal class PlayerInputService : IPlayerInputService, IDisposable
     {
         public float RotationAxis => _gameplayInput.Player.Rotation.ReadValue<float>();
-        public bool IsRotationAxisPressed => RotationAxis != 0;
-        public bool IsAccelerationPressed => _gameplayInput.Player.Acceleration.IsPressed();
-        public bool IsHyperspacePressed => _gameplayInput.Player.Hyperspace.IsPressed();
-        public bool IsShootingPressed => _gameplayInput.Player.Shooting.IsPressed();
+        public bool IsRotationButtonPressed => RotationAxis != 0;
+        public bool IsAccelerationButtonPressed => _gameplayInput.Player.Acceleration.IsPressed();
+        public bool IsAccelerationButtonPressStarted => _gameplayInput.Player.Acceleration.WasPressedThisFrame();
+        public bool IsHyperspaceButtonPressed => _gameplayInput.Player.Hyperspace.IsPressed();
+        public bool IsHyperspaceButtonPressStarted => _gameplayInput.Player.Hyperspace.WasPressedThisFrame();
+        public bool IsShootingButtonPressed => _gameplayInput.Player.Shooting.IsPressed();
+        public bool IsShootingButtonPressStarted => _gameplayInput.Player.Shooting.WasPressedThisFrame();
 
 
         private readonly DefaultGameplayInput _gameplayInput;
