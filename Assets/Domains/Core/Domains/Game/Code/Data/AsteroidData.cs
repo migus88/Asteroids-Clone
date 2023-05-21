@@ -11,6 +11,8 @@ namespace Migs.Asteroids.Game.Data
         public float Size;
         public float Speed;
         public int Points;
+        public float MinRotationSpeed;
+        public float MaxRotationSpeed;
         public RespawnData[] RespawnedAsteroidsData;
         
         [Serializable]

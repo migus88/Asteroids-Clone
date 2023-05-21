@@ -8,6 +8,6 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
     {
         AsteroidData Data { get; }
         
-        void Spawn(AsteroidData data, Vector3 position, Vector3 direction);
+        void Spawn(AsteroidData data, Vector3 position, Quaternion rotation);
     }
 }

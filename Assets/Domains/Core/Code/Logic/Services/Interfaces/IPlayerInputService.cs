@@ -8,5 +8,6 @@ namespace Migs.Asteroids.Core.Logic.Services.Interfaces
         bool IsRotationAxisPressed { get; }
         bool IsAccelerationPressed { get; }
         bool IsHyperspacePressed { get; }
+        bool IsShootingPressed { get; }
     }
 }

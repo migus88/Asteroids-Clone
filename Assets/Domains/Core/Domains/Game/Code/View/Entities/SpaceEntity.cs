@@ -11,8 +11,10 @@ namespace Migs.Asteroids.Game.View.Entities
         public event SpaceEntityCollision Collided;
         
         public Vector3 Velocity => Rigidbody.velocity;
+        public float ForwardVelocity => Vector3.Dot(Velocity, Direction);
         public Vector3 Direction => ViewTransform.TransformDirection(Vector3.forward);
         public Quaternion Rotation => transform.rotation;
+        public Quaternion ViewRotation => ViewTransform.rotation;
         public Bounds Bounds => ViewRenderer.bounds;
 
         public Vector3 Position

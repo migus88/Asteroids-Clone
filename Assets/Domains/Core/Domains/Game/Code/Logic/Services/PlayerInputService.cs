@@ -13,7 +13,8 @@ namespace Migs.Asteroids.Game.Logic.Services
         public bool IsRotationAxisPressed => RotationAxis != 0;
         public bool IsAccelerationPressed => _gameplayInput.Player.Acceleration.IsPressed();
         public bool IsHyperspacePressed => _gameplayInput.Player.Hyperspace.IsPressed();
-        
+        public bool IsShootingPressed => _gameplayInput.Player.Shooting.IsPressed();
+
 
         private readonly DefaultGameplayInput _gameplayInput;
         private readonly IApplicationService _applicationService;

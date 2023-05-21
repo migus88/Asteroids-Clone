@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09e374658794553a27c133bcb26573b, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 300
-  <ThrustersForce>k__BackingField: 60
-  <VelocityDropRate>k__BackingField: 2
+  <RotationSpeed>k__BackingField: 110
+  <ThrustersForce>k__BackingField: 30
+  <MaxVelocity>k__BackingField: 10
+  <VelocityDropRate>k__BackingField: 1
+  <FireRate>k__BackingField: 0.15
+  <MagazineSize>k__BackingField: 5

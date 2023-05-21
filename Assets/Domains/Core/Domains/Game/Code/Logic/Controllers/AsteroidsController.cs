@@ -30,8 +30,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         {
             await _asteroidsService.Preload(10);
             
-            SpawnAsteroid(0, new Vector3(2,0,2), new Vector3(1f, 0, 1f));
-            SpawnAsteroid(1, new Vector3(-2,0,-2), new Vector3(-1, 0, -1));
+            SpawnAsteroid(0, new Vector3(2,0,2), Quaternion.Euler(0, 45, 0));
+            SpawnAsteroid(1, new Vector3(-2,0,-2), Quaternion.Euler(0, -45, 0));
         }
 
         public void Tick()
@@ -57,9 +57,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             foreach (var respawnData in asteroid.Data.RespawnedAsteroidsData)
             {
                 var updatedRotation = asteroid.Rotation * Quaternion.Euler(0, respawnData.RotationAngle, 0);
-                var direction = updatedRotation * Vector3.forward;
                 
-                SpawnAsteroid(respawnData.Level, asteroid.Position, direction);
+                SpawnAsteroid(respawnData.Level, asteroid.Position, updatedRotation);
             }
         }
 
@@ -72,11 +71,11 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _asteroidsService.ReturnAsteroid(asteroid);
         }
 
-        private void SpawnAsteroid(int level, Vector3 position, Vector3 direction)
+        private void SpawnAsteroid(int level, Vector3 position, Quaternion rotation)
         {
             var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
             respawnedAsteroid.Collided += OnAsteroidCollision;
-            respawnedAsteroid.Spawn(_asteroidSettings.AsteroidLevels[level], position, direction);
+            respawnedAsteroid.Spawn(_asteroidSettings.AsteroidLevels[level], position, rotation);
             _asteroids.Add(respawnedAsteroid);
         }
 

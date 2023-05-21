@@ -8,9 +8,11 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
         event SpaceEntityCollision Collided;
         
         Vector3 Velocity { get; }
+        float ForwardVelocity { get; }
         Vector3 Direction { get; }
         Vector3 Position { get; set; }
         Quaternion Rotation { get; }
+        Quaternion ViewRotation { get; }
         Bounds Bounds { get; }
         
         void Explode();

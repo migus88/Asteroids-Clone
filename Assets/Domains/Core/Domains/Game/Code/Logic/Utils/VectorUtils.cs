@@ -12,6 +12,8 @@ namespace Migs.Asteroids.Game.Logic.Utils
         public static Vector3 WrapPosition(Vector3 currentPosition, Bounds objectBounds, Rectangle area)
         {
             const float half = 0.5f;
+            const float threshold = 0.1f;
+            
             var halfWidth = objectBounds.size.x * half;
             var halfHeight = objectBounds.size.y * half;
             
@@ -19,20 +21,20 @@ namespace Migs.Asteroids.Game.Logic.Utils
 
             if (newPosition.x > area.MaxX)
             {
-                newPosition.x = area.MinX - halfWidth;
+                newPosition.x = area.MinX - halfWidth + threshold;
             }
             else if (newPosition.x < area.MinX)
             {
-                newPosition.x = area.MaxX + halfWidth;
+                newPosition.x = area.MaxX + halfWidth - threshold;
             }
         
             if (newPosition.y > area.MaxY)
             {
-                newPosition.y = area.MinY - halfHeight;
+                newPosition.y = area.MinY - halfHeight + threshold;
             }
             else if (newPosition.y < area.MinY)
             {
-                newPosition.y = area.MaxY + halfHeight;
+                newPosition.y = area.MaxY + halfHeight - threshold;
             }
 
             return newPosition.ToRealPosition();

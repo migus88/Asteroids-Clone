@@ -6,6 +6,10 @@ namespace Migs.Asteroids.Game.View.Entities
 {
     public class Player : SpaceEntity, IPlayer
     {
+        public Vector3 ProjectileSpawnPosition => _projectileParent.position;
+
+        [SerializeField] private Transform _projectileParent;
+
         public void Teleport(Vector3 position)
         {
             transform.position = position;

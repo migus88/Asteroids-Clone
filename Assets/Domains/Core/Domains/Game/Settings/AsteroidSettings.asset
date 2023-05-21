@@ -14,17 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AsteroidLevels>k__BackingField:
   - Name: Big Asteroid
+    Level: 0
+    Size: 3
+    Speed: 2
+    Points: 20
+    MinRotationSpeed: 12
+    MaxRotationSpeed: 16
+    RespawnedAsteroidsData:
+    - Level: 1
+      RotationAngle: 45
+    - Level: 1
+      RotationAngle: -45
+  - Name: Medium Asteroid
     Level: 1
     Size: 2
-    Speed: 10
-    Points: 20
-  - Name: Medium Asteroid
+    Speed: 3
+    Points: 50
+    MinRotationSpeed: 15
+    MaxRotationSpeed: 20
+    RespawnedAsteroidsData:
+    - Level: 2
+      RotationAngle: 45
+    - Level: 2
+      RotationAngle: -45
+  - Name: Small Asteroid
     Level: 2
     Size: 1
-    Speed: 12
-    Points: 50
-  - Name: Small Asteroid
-    Level: 3
-    Size: 0.5
-    Speed: 15
+    Speed: 4
     Points: 100
+    MinRotationSpeed: 18
+    MaxRotationSpeed: 25
+    RespawnedAsteroidsData: []

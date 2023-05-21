@@ -21,6 +21,9 @@ namespace Migs.Asteroids.Game.Logic
         [SerializeField] private AsteroidSettings _asteroidSettings;
         [SerializeField] private ViewportService _viewportService;
         [SerializeField] private AsteroidsService _asteroidsService;
+        [SerializeField] private ProjectilesService _projectilesService;
+        [SerializeField] private ProjectileSettings _projectileSettings;
+        
 
         private ICrossDomainServiceRegistrar _registrar;
         
@@ -35,9 +38,11 @@ namespace Migs.Asteroids.Game.Logic
             builder.RegisterComponent<IPlayer>(_player);
             builder.RegisterComponent<IViewportService>(_viewportService);
             builder.RegisterComponent<IAsteroidsService>(_asteroidsService);
+            builder.RegisterComponent<IProjectilesService>(_projectilesService);
 
             builder.RegisterInstance(_playerSettings);
             builder.RegisterInstance(_asteroidSettings);
+            builder.RegisterInstance(_projectileSettings);
             
             builder.UseEntryPoints(Lifetime.Singleton, entryPoints =>
             {

@@ -29,6 +29,10 @@ MonoBehaviour:
     m_Address: Asteroid
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bb8ba207ee2fc49b5baefe97f5b68a02
+    m_Address: Projectile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8017e1f92835b488aa1403b1b8024188, type: 2}
   m_SchemaSet:
