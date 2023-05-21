@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
+using Migs.Asteroids.Game.Logic.Controllers.Interfaces;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Settings;
@@ -10,8 +11,13 @@ using VContainer.Unity;
 
 namespace Migs.Asteroids.Game.Logic.Controllers
 {
-    public class PlayerController : IAsyncStartable, ITickable, IFixedTickable, IDisposable
+    public class PlayerController : IPlayerController, IAsyncStartable, ITickable, IFixedTickable, IDisposable
     {
+        private const int SecondInMillisecond = 1000;
+        
+        public event PlayerExplosion Exploded;
+        public int Lives { get; private set; }
+
         private readonly IPlayer _player;
         private readonly IPlayerInputService _inputService;
         private readonly PlayerSettings _playerSettings;
@@ -34,13 +40,14 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _spaceNavigationService = spaceNavigationService;
             _projectilesService = projectilesService;
 
-            _player.SetDrag(_playerSettings.VelocityDropRate);
+            Reset();
             _player.Collided += OnCollision;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
         {
             await _projectilesService.PreloadProjectiles(_projectileSettings.PreloadAmount);
+            Enable();
         }
 
         public void Tick()
@@ -60,13 +67,34 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public void FixedTick()
         {
+            if (!_isEnabled)
+            {
+                return;
+            }
+            
             Thrust();
         }
 
         private void OnCollision(ISpaceEntity self)
         {
+            Explode().Forget();
+        }
+        
+        public void Reset()
+        {
+            Disable();
+            Lives = _playerSettings.Lives;
+            _player.SetDrag(_playerSettings.VelocityDropRate);
+        }
+
+        public void Enable()
+        {
+            _isEnabled = true;
+        }
+
+        public void Disable()
+        {
             _isEnabled = false;
-            _player.Explode();
         }
 
         private void HandleHyperspace()
@@ -76,18 +104,48 @@ namespace Migs.Asteroids.Game.Logic.Controllers
                 return;
             }
 
-            _isEnabled = false;
             HyperspaceJump().Forget();
+        }
+
+        private async UniTaskVoid Explode()
+        {
+            Disable();
+            
+            _player.Stop();
+            _player.Explode();
+
+            var hasMoreLives = Lives > 0;
+            Exploded?.Invoke(hasMoreLives);
+            
+            Debug.Log($"Exploded. Has more lives? - {(hasMoreLives ? "Yes" : "No")}");
+
+            if (!hasMoreLives)
+            {
+                return;
+            }
+            
+            Lives--;
+
+            await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * SecondInMillisecond);
+            _player.Position = _spaceNavigationService.GetCenterOfGameArea();
+            
+            _player.Show();
+            Enable();
         }
 
         private async UniTaskVoid HyperspaceJump()
         {
+            Disable();
+            
             _player.Stop();
             _player.Hide();
+            
             _player.Position = _spaceNavigationService.GetRandomPlaceInGameArea();
-            await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * 1000);
+            
+            await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * SecondInMillisecond);
+            
             _player.Show();
-            _isEnabled = true;
+            Enable();
         }
 
         private void Shoot()

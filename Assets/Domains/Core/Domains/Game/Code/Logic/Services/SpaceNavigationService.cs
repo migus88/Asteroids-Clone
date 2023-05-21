@@ -24,6 +24,15 @@ namespace Migs.Asteroids.Game.Logic.Handlers
             _gameArea = _viewportService.GetScreenArea();
         }
 
+        public Vector3 GetCenterOfGameArea()
+        {
+            const float half = 0.5f;
+            var x = _gameArea.MaxX - (_gameArea.MaxX - _gameArea.MinX) * half;
+            var z = _gameArea.MaxY - (_gameArea.MaxY - _gameArea.MinY) * half;
+            
+            return new Vector3(x, 0, z);
+        }
+
         public Vector3 GetRandomPlaceInGameArea()
         {
             var x = Random.Range(_gameArea.MinX, _gameArea.MaxX);

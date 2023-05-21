@@ -16,5 +16,8 @@ namespace Migs.Asteroids.Game.Logic.Settings
         [field:Header("Shooting")]
         [field:SerializeField] public float FireRate { get; set; }
         [field:SerializeField] public int MagazineSize { get; set; }
+        
+        [field:Header("Other")]
+        [field:SerializeField] public int Lives { get; set; }
     }
 }
