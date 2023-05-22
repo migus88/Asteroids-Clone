@@ -20,7 +20,7 @@ namespace Migs.Asteroids.Game.View.Services
 
         public void PlaySpaceshipThrusters()
         {
-            if (_spaceshipThrustersSource.isPlaying)
+            if (!_spaceshipThrustersSource || _spaceshipThrustersSource.isPlaying)
             {
                 return;
             }
@@ -31,7 +31,7 @@ namespace Migs.Asteroids.Game.View.Services
 
         public void StopSpaceshipThrusters()
         {
-            if (!_spaceshipThrustersSource.isPlaying)
+            if (!_spaceshipThrustersSource || !_spaceshipThrustersSource.isPlaying)
             {
                 return;
             }
@@ -51,7 +51,7 @@ namespace Migs.Asteroids.Game.View.Services
 
         public void PlaySaucerThrusters()
         {
-            if (_saucerThrustersSource.isPlaying)
+            if (!_saucerThrustersSource || _saucerThrustersSource.isPlaying)
             {
                 return;
             }
@@ -62,7 +62,7 @@ namespace Migs.Asteroids.Game.View.Services
 
         public void StopSaucerThrusters()
         {
-            if (!_saucerThrustersSource.isPlaying)
+            if (!_saucerThrustersSource || !_saucerThrustersSource.isPlaying)
             {
                 return;
             }
