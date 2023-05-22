@@ -41,6 +41,6 @@ namespace Migs.Asteroids.Game.View.Services
 
         public IAsteroid GetObject() => _asteroids.Get();
 
-        public void ReturnObject(IAsteroid asteroid) => _asteroids.Release((Asteroid)asteroid);
+        public void ReturnObject(IAsteroid obj) => _asteroids.Release((Asteroid)obj);
     }
 }

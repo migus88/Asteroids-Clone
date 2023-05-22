@@ -25,10 +25,12 @@ namespace Migs.Asteroids.Game.Logic.Managers
         private readonly IRoundsService _roundsService;
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IScoreService _scoreService;
+        private readonly ISaucerController _saucerController;
 
         public GameManager(IGameSettings gameSettings, IPlayerController playerController,
             IAsteroidsController asteroidsController, IAsteroidsSettings asteroidsSettings,
-            IRoundsService roundsService, ISpaceNavigationService spaceNavigationService, IScoreService scoreService)
+            IRoundsService roundsService, ISpaceNavigationService spaceNavigationService, IScoreService scoreService,
+            ISaucerController saucerController)
         {
             _gameSettings = gameSettings;
             _playerController = playerController;
@@ -37,6 +39,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _roundsService = roundsService;
             _spaceNavigationService = spaceNavigationService;
             _scoreService = scoreService;
+            _saucerController = saucerController;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
@@ -44,7 +47,8 @@ namespace Migs.Asteroids.Game.Logic.Managers
             await UniTask.WhenAll(
                 _playerController.Init(),
                 _asteroidsController.Init(),
-                _roundsService.Init()
+                _roundsService.Init(),
+                _saucerController.Init()
             );
 
             _scoreService.ScoreChanged += OnScoreChanged;
@@ -67,6 +71,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _isGameRunning = true;
 
             _playerController.Reset();
+            _saucerController.Reset();
 
             RoundResult roundResult;
             do
@@ -93,7 +98,9 @@ namespace Migs.Asteroids.Game.Logic.Managers
             SetupRound();
 
             _playerController.MakePlayerImmuneToDamage(_gameSettings.ImmunityDurationOnRoundStart);
+            
             _playerController.Enable();
+            _saucerController.Enable();
 
             while (_playerController.Lives >= 0 && _asteroidsController.SpawnedAsteroids > 0)
             {

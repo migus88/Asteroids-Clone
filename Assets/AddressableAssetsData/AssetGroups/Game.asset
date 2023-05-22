@@ -68,6 +68,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Round Configuration
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08854d8afaef04e1c90f5e7660a26270
+    m_Address: Saucer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8017e1f92835b488aa1403b1b8024188, type: 2}
   m_SchemaSet:

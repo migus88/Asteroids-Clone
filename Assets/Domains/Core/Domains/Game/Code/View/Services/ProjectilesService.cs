@@ -81,9 +81,9 @@ namespace Migs.Asteroids.Game.View.Services
 
         public IProjectile GetObject() => _projectilesPool.Get();
 
-        public void ReturnObject(IProjectile projectile)
+        public void ReturnObject(IProjectile obj)
         {
-            var projectileObj = (Projectile)projectile;
+            var projectileObj = (Projectile)obj;
 
             if (projectileObj.gameObject.layer == _playerProjectileLayer.ToLayer())
             {
