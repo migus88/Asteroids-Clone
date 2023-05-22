@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Domains/Core/Domains/UI/Panels/SplashStyleSheet.uss?fileID=7433441132597879392&amp;guid=f5785beda55e4c38928dd01900debe73&amp;type=3#SplashStyleSheet" />
+    <ui:VisualElement name="background">
+        <ui:VisualElement name="backgroundImage">
+            <ui:VisualElement name="top-spacer" />
+            <ui:Label name="logo-text" text="ASTEROIDS" class="logo-text" />
+            <ui:VisualElement name="start-button-container">
+                <ui:VisualElement class="vertical-spacer" />
+                <ui:Label name="start-button" text="PLAY" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

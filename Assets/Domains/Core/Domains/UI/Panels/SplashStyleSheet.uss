@@ -1,0 +1,56 @@
+*{
+    -unity-font-definition: url('../../../Fonts/G7StarForceTtf-OEg6 SDF.asset'); 
+    -unity-font: url('../../../Fonts/G7StarForceTtf-OEg6.ttf');
+}
+
+#background {
+    flex-grow: 1;
+}
+
+#backgroundImage {
+    background-image: url('../Sprites/deep_space.png');
+    -unity-background-scale-mode: scale-and-crop;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    flex-direction: column;
+}
+
+#start-button-container {
+    flex-grow: 1;
+    flex-basis: 33.3%;
+    align-content: flex-end;
+}
+
+#start-button {
+    margin-bottom: 50px;
+    height: 50px;
+    width: 300px;
+    align-self: center;
+    -unity-text-align: middle-center;
+    font-size: 40px;
+    color: coral;
+}
+
+#start-button:hover {
+    color: orangered;
+}
+
+#top-spacer {
+    flex-grow: 1;
+    flex-basis: 33.3%;
+}
+
+.logo-text {
+    color: white;
+    font-size: 90px;
+    -unity-text-align: upper-center;
+    flex-grow: 1;
+    flex-basis: 33.3%;
+}
+
+.vertical-spacer{
+    flex-grow: 1;
+}
