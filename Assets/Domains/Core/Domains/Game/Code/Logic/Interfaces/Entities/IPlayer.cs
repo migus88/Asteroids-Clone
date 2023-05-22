@@ -13,5 +13,7 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
         void SetDrag(float amount);
         void AddForce(float force);
         void Rotate(float direction, float speed);
+        void ShowThrusters();
+        void HideThrusters();
     }
 }

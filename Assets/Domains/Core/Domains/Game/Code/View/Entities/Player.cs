@@ -10,6 +10,7 @@ namespace Migs.Asteroids.Game.View.Entities
         public Vector3 ProjectileSpawnPosition => _projectileParent.position;
 
         [SerializeField] private Transform _projectileParent;
+        [SerializeField] private GameObject _thrustersEffect;
 
         public void Stop()
         {
@@ -47,6 +48,16 @@ namespace Migs.Asteroids.Game.View.Entities
             direction = Mathf.Clamp(direction, -1f, 1f);
             var rotationAmount = speed * direction * Time.deltaTime;
             ViewTransform.Rotate(new Vector3(0, rotationAmount, 0));
+        }
+
+        public void ShowThrusters()
+        {
+            _thrustersEffect.SetActive(true);
+        }
+
+        public void HideThrusters()
+        {
+            _thrustersEffect.SetActive(false);
         }
     }
 }

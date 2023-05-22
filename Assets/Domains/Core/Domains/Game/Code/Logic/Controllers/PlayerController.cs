@@ -140,6 +140,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             
             _player.Stop();
             _player.Explode().Forget();
+            _player.HideThrusters();
             _soundService.StopSpaceshipThrusters();
             _soundService.PlaySpaceshipExplosion();
 
@@ -219,10 +220,12 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             if (_inputService.IsAccelerationButtonPressed)
             {
                 _soundService.PlaySpaceshipThrusters();
+                _player.ShowThrusters();
             }
             else
             {
                 _soundService.StopSpaceshipThrusters();
+                _player.HideThrusters();
             }
         }
             
