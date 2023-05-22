@@ -70,6 +70,7 @@ MonoBehaviour:
   _explosionEffect: {fileID: 6819119131842501006}
   _projectileParent: {fileID: 4844205471076734439}
   _thrustersEffect: {fileID: 3326119695922135239}
+  _immunityFlickerInterval: 0.1
 --- !u!135 &6788631717081198873
 SphereCollider:
   m_ObjectHideFlags: 0
