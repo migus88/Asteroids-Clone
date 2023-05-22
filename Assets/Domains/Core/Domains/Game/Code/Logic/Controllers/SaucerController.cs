@@ -130,10 +130,10 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void OnSaucerCollision(ISpaceEntity saucer) => DestroySaucer((ISaucer)saucer);
 
-        private void DestroySaucer(ISaucer saucer)
+        private async void DestroySaucer(ISaucer saucer)
         {
             _soundService.PlaySpaceshipExplosion();
-            saucer.Explode();
+            await saucer.Explode();
             ReleaseSaucer();
             _scoreService.AddScore(saucer.Behavior.Points);
         }

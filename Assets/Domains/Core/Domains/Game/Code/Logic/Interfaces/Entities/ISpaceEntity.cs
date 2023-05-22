@@ -1,4 +1,5 @@
 
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
@@ -15,7 +16,7 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
         Quaternion ViewRotation { get; }
         Bounds Bounds { get; }
         
-        void Explode();
+        UniTask Explode();
     }
     
     public delegate void SpaceEntityCollision(ISpaceEntity self);

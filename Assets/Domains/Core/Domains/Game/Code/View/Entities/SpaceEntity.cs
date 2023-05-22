@@ -33,9 +33,7 @@ namespace Migs.Asteroids.Game.View.Entities
         // Collision Matrix making sure that only things that should actually collide with each other are colliding
         protected virtual void OnTriggerEnter(Collider other) => Collided?.Invoke(this);
 
-        public virtual void Explode() => PlayExplosionEffect().Forget();
-        
-        private async UniTaskVoid PlayExplosionEffect()
+        public virtual async UniTask Explode()
         {
             if (!_explosionEffect)
             {

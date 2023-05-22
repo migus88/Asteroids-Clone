@@ -139,7 +139,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             Disable();
             
             _player.Stop();
-            _player.Explode();
+            _player.Explode().Forget();
             _soundService.StopSpaceshipThrusters();
             _soundService.PlaySpaceshipExplosion();
 

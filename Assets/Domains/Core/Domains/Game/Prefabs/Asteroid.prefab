@@ -67,7 +67,7 @@ MonoBehaviour:
   <Rigidbody>k__BackingField: {fileID: 3175075397901391071}
   <ViewRenderer>k__BackingField: {fileID: 5899934118592845475}
   <ViewTransform>k__BackingField: {fileID: 8212633770455900474}
-  _explosionEffect: {fileID: 0}
+  _explosionEffect: {fileID: 6441340811557863049}
 --- !u!65 &1203129532082481004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -286,6 +286,12 @@ PrefabInstance:
 --- !u!4 &2058169918424676334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5249583606151423591, guid: da3cf4fbb797e4cbf98a14c9176eb72a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6073758148890874249}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6441340811557863049 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 949819218816642816, guid: da3cf4fbb797e4cbf98a14c9176eb72a,
     type: 3}
   m_PrefabInstance: {fileID: 6073758148890874249}
   m_PrefabAsset: {fileID: 0}

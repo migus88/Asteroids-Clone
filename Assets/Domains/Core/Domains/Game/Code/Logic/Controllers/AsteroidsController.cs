@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Cathei.LinqGen;
 using Cysharp.Threading.Tasks;
-using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Interfaces.Settings;
-using Migs.Asteroids.Game.Logic.Settings;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -64,10 +60,10 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _asteroids.Add(respawnedAsteroid);
         }
 
-        private void OnAsteroidCollision(ISpaceEntity self)
+        private async void OnAsteroidCollision(ISpaceEntity self)
         {
             var asteroid = (IAsteroid)self;
-            DestroyAsteroid(asteroid);
+            DestroyAsteroid(asteroid).Forget();
 
             if (asteroid.Data.RespawnedAsteroidsData == null || asteroid.Data.RespawnedAsteroidsData.Length == 0)
             {
@@ -82,12 +78,13 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             }
         }
 
-        private void DestroyAsteroid(IAsteroid asteroid)
+        private async UniTask DestroyAsteroid(IAsteroid asteroid)
         {
             _soundService.PlayAsteroidExplosion();
-            asteroid.Explode();
-            ReleaseAsteroid(asteroid);
             _scoreService.AddScore(asteroid.Data.Points);
+            
+            await asteroid.Explode();
+            ReleaseAsteroid(asteroid);
         }
 
         private void ReleaseAsteroid(IAsteroid asteroid)
