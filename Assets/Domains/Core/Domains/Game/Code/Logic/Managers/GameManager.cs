@@ -133,7 +133,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
                     var position = _spaceNavigationService.GetRandomPlaceInGameArea();
                     var rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
-                    _asteroidsController.SpawnAsteroid(asteroid.Level, position, rotation);
+                    _asteroidsController.SpawnAsteroid(asteroid.Level, position, rotation, asteroid.SpeedMultiplier);
                 }
             }
         }

@@ -7,6 +7,6 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Controllers
         int SpawnedAsteroids { get; }
         
         void Reset();
-        void SpawnAsteroid(int level, Vector3 position, Quaternion rotation);
+        void SpawnAsteroid(int level, Vector3 position, Quaternion rotation, float speedMultiplier = 1);
     }
 }

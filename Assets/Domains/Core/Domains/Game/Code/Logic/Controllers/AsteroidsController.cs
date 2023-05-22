@@ -51,11 +51,11 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             }
         }
 
-        public void SpawnAsteroid(int level, Vector3 position, Quaternion rotation)
+        public void SpawnAsteroid(int level, Vector3 position, Quaternion rotation, float speedMultiplier = 1)
         {
             var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
             respawnedAsteroid.Collided += OnAsteroidCollision;
-            respawnedAsteroid.Spawn(_asteroidsSettings.AsteroidLevels[level], position, rotation);
+            respawnedAsteroid.Spawn(_asteroidsSettings.AsteroidLevels[level], position, rotation, speedMultiplier);
             _asteroids.Add(respawnedAsteroid);
         }
 
@@ -73,7 +73,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             {
                 var updatedRotation = asteroid.Rotation * Quaternion.Euler(0, respawnData.RotationAngle, 0);
                 
-                SpawnAsteroid(respawnData.Level, asteroid.Position, updatedRotation);
+                SpawnAsteroid(respawnData.Level, asteroid.Position, updatedRotation, asteroid.CurrentSpeedMultiplier);
             }
         }
 

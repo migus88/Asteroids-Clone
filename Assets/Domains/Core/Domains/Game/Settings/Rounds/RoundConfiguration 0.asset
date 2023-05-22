@@ -17,6 +17,8 @@ MonoBehaviour:
   - <Name>k__BackingField: Big Asteroid
     <Level>k__BackingField: 0
     <Amount>k__BackingField: 3
+    <SpeedMultiplier>k__BackingField: 1
   - <Name>k__BackingField: Medium Asteroid
     <Level>k__BackingField: 1
     <Amount>k__BackingField: 3
+    <SpeedMultiplier>k__BackingField: 1
