@@ -18,7 +18,7 @@ namespace Migs.Asteroids.UI.UI.Code.Logic
             
             builder.UseEntryPoints(entryPoints =>
             {
-                entryPoints.Add<PanelsController>().As<IPanelsController>();
+                entryPoints.Add<MainMenuController>().As<IMainMenuController>();
             });
         }
     }

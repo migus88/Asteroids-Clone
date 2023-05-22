@@ -1,6 +1,6 @@
 namespace Migs.Asteroids.UI.UI.Code.Logic.Interfaces
 {
-    public interface IPanelsController
+    public interface IMainMenuController
     {
         
     }

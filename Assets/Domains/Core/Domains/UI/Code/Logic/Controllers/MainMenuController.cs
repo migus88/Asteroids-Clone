@@ -7,12 +7,12 @@ using VContainer.Unity;
 
 namespace Migs.Asteroids.UI.UI.Code.Logic.Controllers
 {
-    public class PanelsController : IPanelsController, IInitializable, IDisposable
+    public class MainMenuController : IMainMenuController, IInitializable, IDisposable
     {
         private readonly IMainMenuService _mainMenuService;
         private readonly IApplicationService _applicationService;
 
-        public PanelsController(IMainMenuService mainMenuService, IApplicationService applicationService)
+        public MainMenuController(IMainMenuService mainMenuService, IApplicationService applicationService)
         {
             _mainMenuService = mainMenuService;
             _applicationService = applicationService;
