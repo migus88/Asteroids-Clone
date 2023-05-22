@@ -22,9 +22,6 @@ namespace Migs.Asteroids.UI.UI.Code.Logic.Controllers
         
         public void Initialize()
         {
-            _gameUiService.HideGameMenuPanel();
-            _gameUiService.HideGameOverPanel();
-            
             _mainMenuService.PlayButtonClicked += OnPlayButtonClicked;
         }
 
