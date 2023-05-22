@@ -158,13 +158,14 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 1804928774}
   _player: {fileID: 441823569}
-  _playerSettings: {fileID: 11400000, guid: e73556c07c3b34f0ea95bd2ac0c3cd07, type: 2}
-  _asteroidSettings: {fileID: 11400000, guid: eca7b4f69b9ed48428a1fac5e819f696, type: 2}
   _viewportService: {fileID: 1267226644}
   _asteroidsService: {fileID: 1804928775}
   _projectilesService: {fileID: 1779614374}
-  _projectileSettings: {fileID: 11400000, guid: 492251d39c0e74dea8c50bef3068ec8c,
+  _playerSettings: {fileID: 11400000, guid: e73556c07c3b34f0ea95bd2ac0c3cd07, type: 2}
+  _projectilesSettings: {fileID: 11400000, guid: 492251d39c0e74dea8c50bef3068ec8c,
     type: 2}
+  _asteroidsSettings: {fileID: 11400000, guid: eca7b4f69b9ed48428a1fac5e819f696, type: 2}
+  _gameSettings: {fileID: 11400000, guid: 32459f6f71c614f4eb70f32587a47485, type: 2}
 --- !u!4 &138938183
 Transform:
   m_ObjectHideFlags: 0

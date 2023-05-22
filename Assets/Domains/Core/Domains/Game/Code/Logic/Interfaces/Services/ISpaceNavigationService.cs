@@ -1,7 +1,7 @@
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using UnityEngine;
 
-namespace Migs.Asteroids.Game.Logic.Services.Interfaces
+namespace Migs.Asteroids.Game.Logic.Interfaces.Services
 {
     public interface ISpaceNavigationService
     {

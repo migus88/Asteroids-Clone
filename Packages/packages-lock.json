@@ -24,11 +24,11 @@
       "hash": "6c9cf4d8a85c46ee218074d1fe573b889bf98b3d"
     },
     "com.unity.addressables": {
-      "version": "1.19.19",
+      "version": "1.21.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.6",
+        "com.unity.scriptablebuildpipeline": "1.21.5",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -140,7 +140,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.20.1",
+      "version": "1.21.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {},

@@ -9,6 +9,7 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Entities
         void Stop();
         void Hide();
         void Show();
+        void SetDamageImmunity(bool isImmune);
         void SetDrag(float amount);
         void AddForce(float force);
         void Rotate(float direction, float speed);

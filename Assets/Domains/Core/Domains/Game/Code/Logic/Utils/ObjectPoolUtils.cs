@@ -17,10 +17,26 @@ namespace Migs.Asteroids.Game.Logic.Utils
                 pool.Release(obj);
             }
         }
-        
-        public static void OnObjectReleased<T>(T obj) where T : MonoBehaviour => obj.gameObject.SetActive(false);
 
-        public static void OnObjectRetrieved<T>(T obj) where T : MonoBehaviour => obj.gameObject.SetActive(true);
+        public static void OnObjectReleased<T>(T obj) where T : MonoBehaviour
+        {
+            if (!obj)
+            {
+                return;
+            }
+            
+            obj.gameObject.SetActive(false);
+        }
+
+        public static void OnObjectRetrieved<T>(T obj) where T : MonoBehaviour
+        {
+            if (!obj)
+            {
+                return;
+            }
+            
+            obj.gameObject.SetActive(true);
+        }
 
         public static T CreateObject<T>(T prefab, int ordinal) where T : MonoBehaviour
         {

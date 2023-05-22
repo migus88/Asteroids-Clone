@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4002bc1c4fa64313a943932609e843eb, type: 3}
+  m_Name: RoundConfiguration 4
+  m_EditorClassIdentifier: 
+  <MinScore>k__BackingField: 5000
+  <Asteroids>k__BackingField:
+  - <Name>k__BackingField: Big Asteroid
+    <Level>k__BackingField: 0
+    <Amount>k__BackingField: 5
+  - <Name>k__BackingField: Medium Asteroid
+    <Level>k__BackingField: 1
+    <Amount>k__BackingField: 4
+  - <Name>k__BackingField: Small Asteroid
+    <Level>k__BackingField: 2
+    <Amount>k__BackingField: 4

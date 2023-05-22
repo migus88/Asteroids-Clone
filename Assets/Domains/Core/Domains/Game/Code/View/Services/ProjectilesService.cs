@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Utils;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
-using Migs.Asteroids.Game.Logic.Services.Interfaces;
+using Migs.Asteroids.Game.Logic.Interfaces.Services;
+using Migs.Asteroids.Game.Logic.Interfaces.Settings;
 using Migs.Asteroids.Game.Logic.Settings;
 using Migs.Asteroids.Game.Logic.Utils;
 using Migs.Asteroids.Game.View.Entities;
@@ -22,7 +23,7 @@ namespace Migs.Asteroids.Game.View.Services
         private Projectile _projectilePrefab;
         private ObjectPool<Projectile> _projectilesPool;
         private ISpaceNavigationService _spaceNavigationService;
-        private ProjectileSettings _projectileSettings;
+        private IProjectilesSettings _projectilesSettings;
         private int _playerProjectilesActive = 0;
         
         private readonly List<Projectile> _projectiles = new();
@@ -38,17 +39,17 @@ namespace Migs.Asteroids.Game.View.Services
         }
 
         [Inject]
-        public void Init(ISpaceNavigationService spaceNavigationService, ProjectileSettings projectileSettings)
+        public void Init(ISpaceNavigationService spaceNavigationService, IProjectilesSettings projectilesSettings)
         {
             _spaceNavigationService = spaceNavigationService;
-            _projectileSettings = projectileSettings;
+            _projectilesSettings = projectilesSettings;
         }
 
         public async UniTask PreloadProjectiles(int amount = 0)
         {
             if (!_projectilePrefab)
             {
-                _projectilePrefab = await _projectileSettings.PrefabReference.LoadAssetAsync().Task;
+                _projectilePrefab = await _projectilesSettings.PrefabReference.LoadAssetAsync().Task;
             }
             
             ObjectPoolUtils.PreloadObject(_projectilesPool, amount);

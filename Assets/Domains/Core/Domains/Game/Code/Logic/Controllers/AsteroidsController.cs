@@ -1,37 +1,40 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Cathei.LinqGen;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Data;
+using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
-using Migs.Asteroids.Game.Logic.Services.Interfaces;
+using Migs.Asteroids.Game.Logic.Interfaces.Services;
+using Migs.Asteroids.Game.Logic.Interfaces.Settings;
 using Migs.Asteroids.Game.Logic.Settings;
 using UnityEngine;
 using VContainer.Unity;
 
 namespace Migs.Asteroids.Game.Logic.Controllers
 {
-    public class AsteroidsController : IAsyncStartable, ITickable, IFixedTickable, IDisposable
+    public class AsteroidsController : IAsteroidsController, ITickable, IDisposable
     {
+        public int SpawnedAsteroids => _asteroids.Count;
+        
         private readonly IAsteroidsService _asteroidsService;
-        private readonly AsteroidSettings _asteroidSettings;
+        private readonly IAsteroidsSettings _asteroidsSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
         
         private readonly List<IAsteroid> _asteroids = new();
         
-        public AsteroidsController(IAsteroidsService asteroidsService, AsteroidSettings asteroidSettings, ISpaceNavigationService spaceNavigationService)
+        public AsteroidsController(IAsteroidsService asteroidsService, IAsteroidsSettings asteroidsSettings, ISpaceNavigationService spaceNavigationService)
         {
             _asteroidsService = asteroidsService;
-            _asteroidSettings = asteroidSettings;
+            _asteroidsSettings = asteroidsSettings;
             _spaceNavigationService = spaceNavigationService;
         }
 
-        public async UniTask StartAsync(CancellationToken cancellation)
+        public async UniTask Init()
         {
             await _asteroidsService.Preload(10);
-            
-            SpawnAsteroid(0, new Vector3(2,0,2), Quaternion.Euler(0, 45, 0));
-            SpawnAsteroid(1, new Vector3(-2,0,-2), Quaternion.Euler(0, -45, 0));
         }
 
         public void Tick()
@@ -39,9 +42,21 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _asteroids.ForEach(asteroid => _spaceNavigationService.WrapAroundGameArea(asteroid));
         }
 
-        public void FixedTick()
+        public void Reset()
         {
-            
+            var asteroidsToRelease = _asteroids.ToList(); // Cloning the list in order to not modify it during iteration
+            foreach (var asteroid in asteroidsToRelease)
+            {
+                ReleaseAsteroid(asteroid);
+            }
+        }
+
+        public void SpawnAsteroid(int level, Vector3 position, Quaternion rotation)
+        {
+            var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
+            respawnedAsteroid.Collided += OnAsteroidCollision;
+            respawnedAsteroid.Spawn(_asteroidsSettings.AsteroidLevels[level], position, rotation);
+            _asteroids.Add(respawnedAsteroid);
         }
 
         private void OnAsteroidCollision(ISpaceEntity self)
@@ -64,24 +79,20 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void DestroyAsteroid(IAsteroid asteroid)
         {
-            asteroid.Collided -= OnAsteroidCollision;
-            _asteroids.Remove(asteroid);
-
             asteroid.Explode();
-            _asteroidsService.ReturnAsteroid(asteroid);
+            ReleaseAsteroid(asteroid);
         }
 
-        private void SpawnAsteroid(int level, Vector3 position, Quaternion rotation)
+        private void ReleaseAsteroid(IAsteroid asteroid)
         {
-            var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
-            respawnedAsteroid.Collided += OnAsteroidCollision;
-            respawnedAsteroid.Spawn(_asteroidSettings.AsteroidLevels[level], position, rotation);
-            _asteroids.Add(respawnedAsteroid);
+            asteroid.Collided -= OnAsteroidCollision;
+            _asteroids?.Remove(asteroid);
+            _asteroidsService?.ReturnAsteroid(asteroid);
         }
 
         public void Dispose()
         {
-            _asteroids.ForEach(a => a.Collided -= OnAsteroidCollision);
+            _asteroids.ToList().ForEach(ReleaseAsteroid);
         }
     }
 }

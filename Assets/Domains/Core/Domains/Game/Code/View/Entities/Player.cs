@@ -25,7 +25,13 @@ namespace Migs.Asteroids.Game.View.Entities
         {
             gameObject.SetActive(true);
         }
-        
+
+        public void SetDamageImmunity(bool isImmune)
+        {
+            Rigidbody.detectCollisions = !isImmune;
+            // TODO: Animate
+        }
+
         public void SetDrag(float amount)
         {
             Rigidbody.drag = amount;

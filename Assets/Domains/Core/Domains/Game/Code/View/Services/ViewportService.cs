@@ -1,5 +1,5 @@
 using Migs.Asteroids.Game.Data;
-using Migs.Asteroids.Game.Logic.Services.Interfaces;
+using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Utils;
 using UnityEngine;
 

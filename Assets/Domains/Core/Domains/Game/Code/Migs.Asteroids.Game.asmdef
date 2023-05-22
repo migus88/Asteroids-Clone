@@ -4,10 +4,12 @@
     "references": [
         "Unity.Addressables",
         "Unity.ResourceManager",
+        "Unity.Collections",
         "UniTask",
         "VContainer",
         "Migs.Asteroids.Core",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "LinqGen"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

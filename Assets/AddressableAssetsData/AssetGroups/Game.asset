@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Game
+  m_EditorClassIdentifier: 
+  m_GroupName: Game
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d027ad76d983e4ab4853a7654579e655
+  m_SerializeEntries:
+  - m_GUID: 4bb1e253c201246acb873c62a7efbc2f
+    m_Address: RoundConfiguration 0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa8eaedfe6de24b30a51cf3435aad002
+    m_Address: RoundConfiguration 1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a3b83aeb31054275a2c977f668c9127
+    m_Address: RoundConfiguration 2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 409640c06dd4e41849c1034785d0a440
+    m_Address: RoundConfiguration 3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79aa0a4651bf744eb83340fb0e13c300
+    m_Address: RoundConfiguration 4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a79a08f95d44c4c27be3be94bc1767d6
+    m_Address: GameScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc7b798f17ccc46ab8e1151ef97986b3
+    m_Address: Asteroid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb8ba207ee2fc49b5baefe97f5b68a02
+    m_Address: Projectile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f091dd44830f4422f93ebb2887d0cf85
+    m_Address: RoundConfiguration 5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Round Configuration
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8017e1f92835b488aa1403b1b8024188, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1b1924182ab164c199b275867465485f, type: 2}
+    - {fileID: 11400000, guid: 61e7860ab170343bd8f54e44d46884dc, type: 2}

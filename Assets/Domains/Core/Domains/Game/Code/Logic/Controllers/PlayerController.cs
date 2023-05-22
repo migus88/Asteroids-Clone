@@ -2,16 +2,17 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
-using Migs.Asteroids.Game.Logic.Controllers.Interfaces;
+using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
-using Migs.Asteroids.Game.Logic.Services.Interfaces;
+using Migs.Asteroids.Game.Logic.Interfaces.Services;
+using Migs.Asteroids.Game.Logic.Interfaces.Settings;
 using Migs.Asteroids.Game.Logic.Settings;
 using UnityEngine;
 using VContainer.Unity;
 
 namespace Migs.Asteroids.Game.Logic.Controllers
 {
-    public class PlayerController : IPlayerController, IAsyncStartable, ITickable, IFixedTickable, IDisposable
+    public class PlayerController : IPlayerController, ITickable, IFixedTickable, IDisposable
     {
         private const int SecondInMillisecond = 1000;
         
@@ -20,23 +21,24 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private readonly IPlayer _player;
         private readonly IPlayerInputService _inputService;
-        private readonly PlayerSettings _playerSettings;
-        private readonly ProjectileSettings _projectileSettings;
+        private readonly IPlayerSettings _playerSettings;
+        private readonly IProjectilesSettings _projectilesSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IProjectilesService _projectilesService;
 
         private bool _shouldAddForce = false;
         private float _timeSinceLastShot = 0;
         private bool _isEnabled = true;
+        private bool _canBeDestroyed = true;
 
-        public PlayerController(IPlayer player, IPlayerInputService inputService, PlayerSettings playerSettings,
-            ProjectileSettings projectileSettings, ISpaceNavigationService spaceNavigationService,
+        public PlayerController(IPlayer player, IPlayerInputService inputService, IPlayerSettings playerSettings,
+            IProjectilesSettings projectilesSettings, ISpaceNavigationService spaceNavigationService,
             IProjectilesService projectilesService)
         {
             _player = player;
             _inputService = inputService;
             _playerSettings = playerSettings;
-            _projectileSettings = projectileSettings;
+            _projectilesSettings = projectilesSettings;
             _spaceNavigationService = spaceNavigationService;
             _projectilesService = projectilesService;
 
@@ -44,10 +46,9 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _player.Collided += OnCollision;
         }
 
-        public async UniTask StartAsync(CancellationToken cancellation)
+        public async UniTask Init()
         {
-            await _projectilesService.PreloadProjectiles(_projectileSettings.PreloadAmount);
-            Enable();
+            await _projectilesService.PreloadProjectiles(_projectilesSettings.PreloadAmount);
         }
 
         public void Tick()
@@ -77,6 +78,11 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void OnCollision(ISpaceEntity self)
         {
+            if (!_canBeDestroyed)
+            {
+                return;
+            }
+            
             Explode().Forget();
         }
         
@@ -95,6 +101,24 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         public void Disable()
         {
             _isEnabled = false;
+        }
+
+        public void MakePlayerImmuneToDamage(int durationInSeconds)
+        {
+            MakePlayerImmuneToDamageInternal(durationInSeconds).Forget();
+        }
+        
+        private async UniTaskVoid MakePlayerImmuneToDamageInternal(int durationInSeconds)
+        {
+            SetDamageImmunity(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(durationInSeconds));
+            SetDamageImmunity(false);
+        }
+
+        private void SetDamageImmunity(bool isImmune)
+        {
+            _player.SetDamageImmunity(isImmune);
+            _canBeDestroyed = !isImmune;
         }
 
         private void HandleHyperspace()
@@ -131,6 +155,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             
             _player.Show();
             Enable();
+            
+            MakePlayerImmuneToDamage(_playerSettings.ImmunityDurationOnRespawn);
         }
 
         private async UniTaskVoid HyperspaceJump()
@@ -164,7 +190,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
                 return;
             }
 
-            projectile.Spawn(_player.ProjectileSpawnPosition, _player.ViewRotation, _projectileSettings.Speed);
+            projectile.Spawn(_player.ProjectileSpawnPosition, _player.ViewRotation, _projectilesSettings.Speed);
             _timeSinceLastShot = 0;
         }
 

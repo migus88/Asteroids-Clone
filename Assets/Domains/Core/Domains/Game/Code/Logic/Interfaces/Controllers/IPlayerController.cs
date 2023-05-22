@@ -1,8 +1,8 @@
-using System;
+using Cysharp.Threading.Tasks;
 
-namespace Migs.Asteroids.Game.Logic.Controllers.Interfaces
+namespace Migs.Asteroids.Game.Logic.Interfaces.Controllers
 {
-    public interface IPlayerController
+    public interface IPlayerController : IController
     {
         event PlayerExplosion Exploded;
         
@@ -11,6 +11,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers.Interfaces
         void Reset();
         void Enable();
         void Disable();
+        void MakePlayerImmuneToDamage(int durationInSeconds);
     }
 
     public delegate void PlayerExplosion(bool hasMoreLives);

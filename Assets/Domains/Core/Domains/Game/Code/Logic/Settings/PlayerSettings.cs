@@ -1,10 +1,11 @@
 using Migs.Asteroids.Core.Logic.Utils;
+using Migs.Asteroids.Game.Logic.Interfaces.Settings;
 using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Settings
 {
     [CreateAssetMenu(fileName = nameof(PlayerSettings), menuName = MenuItems.Settings + nameof(PlayerSettings))]
-    public class PlayerSettings : ScriptableObject
+    public class PlayerSettings : ScriptableObject, IPlayerSettings
     {
         [field:Header("Movement")]
         [field:SerializeField] public float RotationSpeed { get; set; }
@@ -19,5 +20,6 @@ namespace Migs.Asteroids.Game.Logic.Settings
         
         [field:Header("Other")]
         [field:SerializeField] public int Lives { get; set; }
+        [field:SerializeField] public int ImmunityDurationOnRespawn { get; set; }
     }
 }
