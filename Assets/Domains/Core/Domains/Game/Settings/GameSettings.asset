@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   <RoundChangeDuration>k__BackingField: 1
-  <ImmunityDuration>k__BackingField: 2
+  <ImmunityDurationOnRoundStart>k__BackingField: 2
+  <PointsNeededForAdditionalLife>k__BackingField: 10000

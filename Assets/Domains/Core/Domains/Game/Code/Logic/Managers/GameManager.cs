@@ -23,6 +23,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
                 if (_currentScore != value)
                 {
                     ScoreChanged?.Invoke(_currentScore, value);
+                    HandleLifeAccumulation(_currentScore, value);
                 }
 
                 _currentScore = value;
@@ -105,7 +106,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
 
             SetupRound();
 
-            _playerController.MakePlayerImmuneToDamage(_gameSettings.ImmunityDuration);
+            _playerController.MakePlayerImmuneToDamage(_gameSettings.ImmunityDurationOnRoundStart);
             _playerController.Enable();
 
             while (_playerController.Lives >= 0 && _asteroidsController.SpawnedAsteroids > 0)
@@ -136,6 +137,19 @@ namespace Migs.Asteroids.Game.Logic.Managers
                     _asteroidsController.SpawnAsteroid(asteroid.Level, position, rotation, asteroid.SpeedMultiplier);
                 }
             }
+        }
+
+        private void HandleLifeAccumulation(int previousScore, int newScore)
+        {
+            if (newScore < _gameSettings.PointsNeededForAdditionalLife)
+            {
+                return;
+            }
+            
+            var previousValue = previousScore / _gameSettings.PointsNeededForAdditionalLife;
+            var newValue = newScore / _gameSettings.PointsNeededForAdditionalLife;
+
+            _playerController.Lives += newValue - previousValue;
         }
 
         public void Dispose()

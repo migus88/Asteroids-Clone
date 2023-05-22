@@ -17,7 +17,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         private const int SecondInMillisecond = 1000;
         
         public event PlayerExplosion Exploded;
-        public int Lives { get; private set; }
+        public int Lives { get; set; }
 
         private readonly IPlayer _player;
         private readonly IPlayerInputService _inputService;

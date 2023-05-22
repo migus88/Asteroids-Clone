@@ -8,6 +8,7 @@ namespace Migs.Asteroids.Game.Logic.Settings
     public class GameSettings : ScriptableObject, IGameSettings
     {
         [field:SerializeField] public int RoundChangeDuration { get; set; }
-        [field:SerializeField] public int ImmunityDuration { get; set; }
+        [field:SerializeField] public int ImmunityDurationOnRoundStart { get; set; }
+        [field:SerializeField] public int PointsNeededForAdditionalLife { get; set; }
     }
 }

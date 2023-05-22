@@ -6,7 +6,7 @@ namespace Migs.Asteroids.Game.Logic.Interfaces.Controllers
     {
         event PlayerExplosion Exploded;
         
-        int Lives { get; }
+        int Lives { get; set; }
 
         void Reset();
         void Enable();
