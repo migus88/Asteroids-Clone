@@ -44,6 +44,7 @@ namespace Migs.Asteroids.Game.View.Entities
             }
             
             ViewTransform.gameObject.SetActive(false);
+            Rigidbody.detectCollisions = false;
             
             _explosionEffect.gameObject.SetActive(true);
             _explosionEffect.Play(true);
@@ -51,6 +52,7 @@ namespace Migs.Asteroids.Game.View.Entities
             _explosionEffect.Stop();
             _explosionEffect.gameObject.SetActive(false);
 
+            Rigidbody.detectCollisions = true;
             ViewTransform.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
