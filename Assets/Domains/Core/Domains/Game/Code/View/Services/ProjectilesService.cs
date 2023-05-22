@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Utils;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
@@ -27,6 +28,7 @@ namespace Migs.Asteroids.Game.View.Services
         private int _playerProjectilesActive = 0;
         
         private readonly List<Projectile> _projectiles = new();
+        private readonly Dictionary<IProjectile, CancellationTokenSource> _cancellationTokenSources = new();
         
         private void Awake()
         {
@@ -95,6 +97,14 @@ namespace Migs.Asteroids.Game.View.Services
 
         private void OnProjectileReleased(Projectile projectile)
         {
+            var hasCancellationTokenSource = _cancellationTokenSources.TryGetValue(projectile, out var tokenSource);
+
+            if (hasCancellationTokenSource)
+            {
+                tokenSource.Cancel();
+                _cancellationTokenSources.Remove(projectile);
+            }
+            
             ObjectPoolUtils.OnObjectReleased(projectile);
             projectile.Collided -= OnProjectileCollided;
         }
@@ -113,9 +123,17 @@ namespace Migs.Asteroids.Game.View.Services
             return projectile;
         }
 
-        private async UniTaskVoid StartProjectileLifespan(IProjectile projectile)
+        private async UniTask StartProjectileLifespan(IProjectile projectile)
         {
-            await UniTask.Delay(_projectileLifespanInSeconds * 1000);
+            var cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSources.Add(projectile, cancellationTokenSource);
+            await UniTask.Delay(TimeSpan.FromSeconds(_projectileLifespanInSeconds), DelayType.DeltaTime, PlayerLoopTiming.Update, cancellationTokenSource.Token);
+
+            if (cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                return;
+            }
+            
             OnProjectileCollided(projectile);
         }
 
