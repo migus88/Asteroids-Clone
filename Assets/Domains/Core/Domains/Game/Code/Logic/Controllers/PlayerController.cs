@@ -93,6 +93,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             Disable();
             Lives = _playerSettings.Lives;
             _player.SetDrag(_playerSettings.VelocityDropRate);
+            _player.Show();
         }
 
         public void Enable()

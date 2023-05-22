@@ -73,10 +73,13 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _gameUiService.ShowGameMenuPanel();
             _gameUiService.HideGameOverPanel();
 
+            _asteroidsController.Reset();
             _playerController.Reset();
             _saucerController.Reset();
+            _scoreService.Reset();
             
             _gameUiService.SetLives(_playerController.Lives);
+            _gameUiService.SetScore(_scoreService.CurrentScore);
 
             var roundResult = RoundResult.None;
             
