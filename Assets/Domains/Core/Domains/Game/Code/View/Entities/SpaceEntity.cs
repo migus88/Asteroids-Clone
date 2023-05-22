@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,9 +28,31 @@ namespace Migs.Asteroids.Game.View.Entities
         [field:SerializeField] protected Renderer ViewRenderer { get; set; }
         [field:SerializeField] protected Transform ViewTransform { get; set; }
         
+        [SerializeField] private ParticleSystem _explosionEffect;
+        
         // Collision Matrix making sure that only things that should actually collide with each other are colliding
         protected virtual void OnTriggerEnter(Collider other) => Collided?.Invoke(this);
 
-        public virtual void Explode() { }
+        public virtual void Explode() => PlayExplosionEffect().Forget();
+        
+        private async UniTaskVoid PlayExplosionEffect()
+        {
+            if (!_explosionEffect)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+            
+            ViewTransform.gameObject.SetActive(false);
+            
+            _explosionEffect.gameObject.SetActive(true);
+            _explosionEffect.Play(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(_explosionEffect.main.duration));
+            _explosionEffect.Stop();
+            _explosionEffect.gameObject.SetActive(false);
+
+            ViewTransform.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 }
