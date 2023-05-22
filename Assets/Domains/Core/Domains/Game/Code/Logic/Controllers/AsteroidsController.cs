@@ -22,14 +22,16 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         private readonly IAsteroidsService _asteroidsService;
         private readonly IAsteroidsSettings _asteroidsSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
-        
+        private readonly IScoreService _scoreService;
+
         private readonly List<IAsteroid> _asteroids = new();
         
-        public AsteroidsController(IAsteroidsService asteroidsService, IAsteroidsSettings asteroidsSettings, ISpaceNavigationService spaceNavigationService)
+        public AsteroidsController(IAsteroidsService asteroidsService, IAsteroidsSettings asteroidsSettings, ISpaceNavigationService spaceNavigationService, IScoreService scoreService)
         {
             _asteroidsService = asteroidsService;
             _asteroidsSettings = asteroidsSettings;
             _spaceNavigationService = spaceNavigationService;
+            _scoreService = scoreService;
         }
 
         public async UniTask Init()
@@ -81,6 +83,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         {
             asteroid.Explode();
             ReleaseAsteroid(asteroid);
+            _scoreService.AddScore(asteroid.Data.Points);
         }
 
         private void ReleaseAsteroid(IAsteroid asteroid)

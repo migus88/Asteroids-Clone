@@ -44,6 +44,7 @@ namespace Migs.Asteroids.Game.Logic
             builder.Register<DefaultGameplayInput>(Lifetime.Singleton);
             builder.Register<ISpaceNavigationService, SpaceNavigationService>(Lifetime.Singleton);
             builder.Register<IRoundsService, RoundsService>(Lifetime.Singleton);
+            builder.Register<IScoreService, ScoreService>(Lifetime.Singleton);
             
             builder.RegisterComponent<IPlayer>(_player);
             builder.RegisterComponent<IViewportService>(_viewportService);

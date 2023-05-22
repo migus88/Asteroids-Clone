@@ -15,24 +15,6 @@ namespace Migs.Asteroids.Game.Logic.Managers
 {
     public class GameManager : IGameManager, IAsyncStartable, ITickable, IDisposable
     {
-        public int CurrentScore
-        {
-            get => _currentScore;
-            set
-            {
-                if (_currentScore != value)
-                {
-                    ScoreChanged?.Invoke(_currentScore, value);
-                    HandleLifeAccumulation(_currentScore, value);
-                }
-
-                _currentScore = value;
-            }
-        }
-
-        public event ScoreChange ScoreChanged;
-
-        private int _currentScore;
         private bool _isRoundRunning;
         private bool _isGameRunning;
 
@@ -42,10 +24,11 @@ namespace Migs.Asteroids.Game.Logic.Managers
         private readonly IAsteroidsSettings _asteroidsSettings;
         private readonly IRoundsService _roundsService;
         private readonly ISpaceNavigationService _spaceNavigationService;
+        private readonly IScoreService _scoreService;
 
         public GameManager(IGameSettings gameSettings, IPlayerController playerController,
             IAsteroidsController asteroidsController, IAsteroidsSettings asteroidsSettings,
-            IRoundsService roundsService, ISpaceNavigationService spaceNavigationService)
+            IRoundsService roundsService, ISpaceNavigationService spaceNavigationService, IScoreService scoreService)
         {
             _gameSettings = gameSettings;
             _playerController = playerController;
@@ -53,6 +36,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _asteroidsSettings = asteroidsSettings;
             _roundsService = roundsService;
             _spaceNavigationService = spaceNavigationService;
+            _scoreService = scoreService;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
@@ -62,6 +46,8 @@ namespace Migs.Asteroids.Game.Logic.Managers
                 _asteroidsController.Init(),
                 _roundsService.Init()
             );
+
+            _scoreService.ScoreChanged += OnScoreChanged;
 
             RunGame().Forget();
         }
@@ -125,7 +111,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
 
         private void SetupRound()
         {
-            var roundConfig = _roundsService.GetRoundConfiguration(CurrentScore);
+            var roundConfig = _roundsService.GetRoundConfiguration(_scoreService.CurrentScore);
 
             foreach (var asteroid in roundConfig.Asteroids)
             {
@@ -137,6 +123,12 @@ namespace Migs.Asteroids.Game.Logic.Managers
                     _asteroidsController.SpawnAsteroid(asteroid.Level, position, rotation, asteroid.SpeedMultiplier);
                 }
             }
+        }
+
+        private void OnScoreChanged(int oldScore, int newScore)
+        {
+            Debug.Log($"New Score: {newScore}");
+            HandleLifeAccumulation(oldScore, newScore);
         }
 
         private void HandleLifeAccumulation(int previousScore, int newScore)
@@ -154,6 +146,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
 
         public void Dispose()
         {
+            _scoreService.ScoreChanged -= OnScoreChanged;
         }
     }
 }
