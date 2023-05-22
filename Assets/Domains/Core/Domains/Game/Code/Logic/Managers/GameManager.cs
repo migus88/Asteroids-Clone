@@ -109,7 +109,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _playerController.Enable();
             _saucerController.Enable();
 
-            while (_playerController.Lives >= 0 && _asteroidsController.SpawnedAsteroids > 0)
+            while (_playerController.Lives > 0 && _asteroidsController.SpawnedAsteroids > 0)
             {
                 await UniTask.Yield();
 

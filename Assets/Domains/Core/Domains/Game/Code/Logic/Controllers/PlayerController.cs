@@ -140,8 +140,10 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _player.Stop();
             _player.Explode();
 
-            var hasMoreLives = Lives > 0;
             Lives--;
+            _gameUiService.SetLives(Lives);
+            
+            var hasMoreLives = Lives > 0;
             Exploded?.Invoke(hasMoreLives);
             
             Debug.Log($"Exploded. Has more lives? - {(hasMoreLives ? "Yes" : "No")}");
@@ -150,8 +152,6 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             {
                 return;
             }
-            
-            _gameUiService.SetLives(Lives);
 
             await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * SecondInMillisecond);
             _player.Position = _spaceNavigationService.GetCenterOfGameArea();
