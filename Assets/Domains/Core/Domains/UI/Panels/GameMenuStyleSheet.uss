@@ -1,0 +1,26 @@
+*{
+    -unity-font-definition: url('../../../Fonts/G7StarForceTtf-OEg6 SDF.asset'); 
+    -unity-font: url('../../../Fonts/G7StarForceTtf-OEg6.ttf');
+    color: white;
+}
+
+#top-container{
+    flex-direction: row;
+}
+
+#lives-container, #score-container {
+    flex-grow: 1;
+    flex-basis: 50%;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+#lives-container{
+    -unity-text-align: middle-right;
+    margin-right: 20px;
+}
+
+#score-container{
+    -unity-text-align: middle-left;
+    margin-left: 20px;
+}

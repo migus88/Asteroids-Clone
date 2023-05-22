@@ -25,6 +25,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         private readonly IProjectilesSettings _projectilesSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IProjectilesService _projectilesService;
+        private readonly IGameUiService _gameUiService;
 
         private bool _shouldAddForce = false;
         private float _timeSinceLastShot = 0;
@@ -33,7 +34,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public PlayerController(IPlayer player, IPlayerInputService inputService, IPlayerSettings playerSettings,
             IProjectilesSettings projectilesSettings, ISpaceNavigationService spaceNavigationService,
-            IProjectilesService projectilesService)
+            IProjectilesService projectilesService, ICrossDomainServiceResolver crossDomainServiceResolver)
         {
             _player = player;
             _inputService = inputService;
@@ -41,6 +42,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _projectilesSettings = projectilesSettings;
             _spaceNavigationService = spaceNavigationService;
             _projectilesService = projectilesService;
+            _gameUiService = crossDomainServiceResolver.ResolveService<IGameUiService>();
 
             Reset();
             _player.Collided += OnCollision;
@@ -139,6 +141,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _player.Explode();
 
             var hasMoreLives = Lives > 0;
+            Lives--;
             Exploded?.Invoke(hasMoreLives);
             
             Debug.Log($"Exploded. Has more lives? - {(hasMoreLives ? "Yes" : "No")}");
@@ -148,7 +151,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
                 return;
             }
             
-            Lives--;
+            _gameUiService.SetLives(Lives);
 
             await UniTask.Delay(_playerSettings.HyperspaceDurationInSeconds * SecondInMillisecond);
             _player.Position = _spaceNavigationService.GetCenterOfGameArea();

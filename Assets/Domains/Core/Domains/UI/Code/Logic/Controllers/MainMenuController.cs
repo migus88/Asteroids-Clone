@@ -11,15 +11,20 @@ namespace Migs.Asteroids.UI.UI.Code.Logic.Controllers
     {
         private readonly IMainMenuService _mainMenuService;
         private readonly IApplicationService _applicationService;
+        private readonly IGameUiService _gameUiService;
 
-        public MainMenuController(IMainMenuService mainMenuService, IApplicationService applicationService)
+        public MainMenuController(IMainMenuService mainMenuService, IApplicationService applicationService, IGameUiService gameUiService)
         {
             _mainMenuService = mainMenuService;
             _applicationService = applicationService;
+            _gameUiService = gameUiService;
         }
         
         public void Initialize()
         {
+            _gameUiService.HideGameMenuPanel();
+            _gameUiService.HideGameOverPanel();
+            
             _mainMenuService.PlayButtonClicked += OnPlayButtonClicked;
         }
 

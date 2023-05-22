@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Domains/Core/Domains/UI/Panels/GameOverStyleSheet.uss?fileID=7433441132597879392&amp;guid=c0e3f5229bd714be5be57fe99554c725&amp;type=3#GameOverStyleSheet" />
+    <ui:VisualElement name="game-over-background">
+        <ui:Label name="game-over-text" text="GAME OVER" />
+    </ui:VisualElement>
+</ui:UXML>

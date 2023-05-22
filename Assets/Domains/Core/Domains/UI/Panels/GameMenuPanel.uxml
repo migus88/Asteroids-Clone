@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Domains/Core/Domains/UI/Panels/GameMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=8a3863cb8a4643179436a3a7277bf404&amp;type=3#GameMenuStyleSheet" />
+    <ui:VisualElement name="top-container">
+        <ui:VisualElement name="score-container">
+            <ui:Label name="score-text" text="SCORE: 0" />
+        </ui:VisualElement>
+        <ui:VisualElement name="lives-container">
+            <ui:Label name="lives-text" text="LIVES: 0" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

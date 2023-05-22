@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Migs.Asteroids.Core.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Managers;
@@ -13,7 +14,7 @@ using Random = UnityEngine.Random;
 
 namespace Migs.Asteroids.Game.Logic.Managers
 {
-    public class GameManager : IGameManager, IAsyncStartable, ITickable, IDisposable
+    public class GameManager : IGameManager, IAsyncStartable, IDisposable
     {
         private bool _isRoundRunning;
         private bool _isGameRunning;
@@ -26,11 +27,12 @@ namespace Migs.Asteroids.Game.Logic.Managers
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IScoreService _scoreService;
         private readonly ISaucerController _saucerController;
+        private readonly IGameUiService _gameUiService;
 
         public GameManager(IGameSettings gameSettings, IPlayerController playerController,
             IAsteroidsController asteroidsController, IAsteroidsSettings asteroidsSettings,
             IRoundsService roundsService, ISpaceNavigationService spaceNavigationService, IScoreService scoreService,
-            ISaucerController saucerController)
+            ISaucerController saucerController, ICrossDomainServiceResolver crossDomainServiceResolver)
         {
             _gameSettings = gameSettings;
             _playerController = playerController;
@@ -40,6 +42,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
             _spaceNavigationService = spaceNavigationService;
             _scoreService = scoreService;
             _saucerController = saucerController;
+            _gameUiService = crossDomainServiceResolver.ResolveService<IGameUiService>();
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
@@ -52,12 +55,9 @@ namespace Migs.Asteroids.Game.Logic.Managers
             );
 
             _scoreService.ScoreChanged += OnScoreChanged;
+            _gameUiService.RestartGamePressed += OnRestartPressed;
 
             RunGame().Forget();
-        }
-
-        public void Tick()
-        {
         }
 
         public async UniTaskVoid RunGame()
@@ -69,18 +69,25 @@ namespace Migs.Asteroids.Game.Logic.Managers
             }
 
             _isGameRunning = true;
+            
+            _gameUiService.ShowGameMenuPanel();
+            _gameUiService.HideGameOverPanel();
 
             _playerController.Reset();
             _saucerController.Reset();
+            
+            _gameUiService.SetLives(_playerController.Lives);
 
-            RoundResult roundResult;
-            do
+            var roundResult = RoundResult.None;
+            
+            while (roundResult != RoundResult.Defeat)
             {
                 roundResult = await RunRound();
-            } while (roundResult != RoundResult.Defeat);
+            } 
 
             _isGameRunning = false;
-            // TODO: Show game over window
+            
+            _gameUiService.ShowGameOverPanel();
         }
 
         private async UniTask<RoundResult> RunRound()
@@ -136,6 +143,7 @@ namespace Migs.Asteroids.Game.Logic.Managers
         {
             Debug.Log($"New Score: {newScore}");
             HandleLifeAccumulation(oldScore, newScore);
+            _gameUiService.SetScore(newScore);
         }
 
         private void HandleLifeAccumulation(int previousScore, int newScore)
@@ -149,11 +157,18 @@ namespace Migs.Asteroids.Game.Logic.Managers
             var newValue = newScore / _gameSettings.PointsNeededForAdditionalLife;
 
             _playerController.Lives += newValue - previousValue;
+            _gameUiService.SetLives(_playerController.Lives);
+        }
+
+        private void OnRestartPressed()
+        {
+            RunGame().Forget();
         }
 
         public void Dispose()
         {
             _scoreService.ScoreChanged -= OnScoreChanged;
+            _gameUiService.RestartGamePressed -= OnRestartPressed;
         }
     }
 }
