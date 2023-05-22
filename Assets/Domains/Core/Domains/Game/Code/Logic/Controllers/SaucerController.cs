@@ -20,6 +20,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IProjectilesService _projectilesService;
         private readonly IProjectilesSettings _projectilesSettings;
+        private readonly ISoundService _soundService;
 
         private ISaucer _saucer;
         private float _timeSinceLastSaucer;
@@ -27,7 +28,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public SaucerController(ISaucerService saucerService, ISaucerSettings saucerSettings, IPlayer player,
             IScoreService scoreService, ISpaceNavigationService spaceNavigationService,
-            IProjectilesService projectilesService, IProjectilesSettings projectilesSettings)
+            IProjectilesService projectilesService, IProjectilesSettings projectilesSettings, ISoundService soundService)
         {
             _saucerService = saucerService;
             _saucerSettings = saucerSettings;
@@ -36,6 +37,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _spaceNavigationService = spaceNavigationService;
             _projectilesService = projectilesService;
             _projectilesSettings = projectilesSettings;
+            _soundService = soundService;
         }
 
         public UniTask Init()
@@ -58,7 +60,12 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             }
             else
             {
-                _saucer.Behavior.Shoot(_saucer, _projectilesService, _projectilesSettings, _player);
+                var isShot = _saucer.Behavior.Shoot(_saucer, _projectilesService, _projectilesSettings, _player);
+
+                if (isShot)
+                {
+                    _soundService.PlaySaucerLaser();
+                }
 
                 HandleOutOfScreen();
             }
@@ -115,6 +122,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             var (position, direction) = _spaceNavigationService.GetRandomSaucerSpawnPosition(_saucer.Bounds.size.y);
 
             _saucer.Spawn(behavior, position, direction);
+            _soundService.PlaySaucerThrusters();
+            
             _saucer.Behavior.Reset();
             _timeSinceLastSaucer = 0;
         }
@@ -123,6 +132,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void DestroySaucer(ISaucer saucer)
         {
+            _soundService.PlaySpaceshipExplosion();
             saucer.Explode();
             ReleaseSaucer();
             _scoreService.AddScore(saucer.Behavior.Points);
@@ -130,6 +140,8 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         private void ReleaseSaucer()
         {
+            _soundService.StopSaucerThrusters();
+            
             if (_saucer == null)
             {
                 return;

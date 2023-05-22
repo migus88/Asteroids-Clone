@@ -22,26 +22,28 @@ namespace Migs.Asteroids.Game.Logic.Settings.Behaviors
             _timeSinceLastShot = 0;
         }
         
-        public virtual void Shoot(ISaucer saucer, IProjectilesService projectilesService, IProjectilesSettings projectilesSettings, IPlayer player)
+        public virtual bool Shoot(ISaucer saucer, IProjectilesService projectilesService, IProjectilesSettings projectilesSettings, IPlayer player)
         {
             _timeSinceLastShot += Time.deltaTime;
 
             if (saucer == null || _timeSinceLastShot < FireRate)
             {
-                return;
+                return false;
             }
 
             var projectile = projectilesService.GetAvailableEnemyProjectile();
 
             if (projectile == null)
             {
-                return;
+                return false;
             }
 
             var rotation = GetProjectileDirection(saucer, player);
 
             projectile.Spawn(saucer.ProjectileSpawnPosition, rotation, projectilesSettings.Speed);
             _timeSinceLastShot = 0;
+
+            return true;
         }
 
         protected abstract Quaternion GetProjectileDirection(ISaucer saucer, IPlayer player);

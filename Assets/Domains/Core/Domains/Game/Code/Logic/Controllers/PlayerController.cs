@@ -1,12 +1,10 @@
 using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Interfaces.Settings;
-using Migs.Asteroids.Game.Logic.Settings;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -25,6 +23,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         private readonly IProjectilesSettings _projectilesSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IProjectilesService _projectilesService;
+        private readonly ISoundService _soundService;
         private readonly IGameUiService _gameUiService;
 
         private bool _shouldAddForce = false;
@@ -34,7 +33,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public PlayerController(IPlayer player, IPlayerInputService inputService, IPlayerSettings playerSettings,
             IProjectilesSettings projectilesSettings, ISpaceNavigationService spaceNavigationService,
-            IProjectilesService projectilesService, ICrossDomainServiceResolver crossDomainServiceResolver)
+            IProjectilesService projectilesService, ICrossDomainServiceResolver crossDomainServiceResolver, ISoundService soundService)
         {
             _player = player;
             _inputService = inputService;
@@ -42,6 +41,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _projectilesSettings = projectilesSettings;
             _spaceNavigationService = spaceNavigationService;
             _projectilesService = projectilesService;
+            _soundService = soundService;
             _gameUiService = crossDomainServiceResolver.ResolveService<IGameUiService>();
 
             Reset();
@@ -140,6 +140,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             
             _player.Stop();
             _player.Explode();
+            _soundService.PlaySpaceshipExplosion();
 
             Lives--;
             _gameUiService.SetLives(Lives);
@@ -196,6 +197,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
             projectile.Spawn(_player.ProjectileSpawnPosition, _player.ViewRotation, _projectilesSettings.Speed);
             _timeSinceLastShot = 0;
+            _soundService.PlaySpaceshipLaser();
         }
 
         private void Rotate()
@@ -208,9 +210,21 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             _player.Rotate(_inputService.RotationAxis, _playerSettings.RotationSpeed);
         }
 
-        private void HandleMovement() =>
+        private void HandleMovement()
+        {
             _shouldAddForce = _inputService.IsAccelerationButtonPressed &&
                               _player.ForwardVelocity < _playerSettings.MaxVelocity;
+
+            if (_shouldAddForce)
+            {
+                _soundService.PlaySpaceshipThrusters();
+            }
+            else
+            {
+                _soundService.StopSpaceshipThrusters();
+            }
+        }
+            
 
         private void Thrust()
         {

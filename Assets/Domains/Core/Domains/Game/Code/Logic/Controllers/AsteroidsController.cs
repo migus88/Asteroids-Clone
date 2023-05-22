@@ -18,20 +18,23 @@ namespace Migs.Asteroids.Game.Logic.Controllers
     public class AsteroidsController : IAsteroidsController, ITickable, IDisposable
     {
         public int SpawnedAsteroids => _asteroids.Count;
-        
+
         private readonly IAsteroidsService _asteroidsService;
         private readonly IAsteroidsSettings _asteroidsSettings;
         private readonly ISpaceNavigationService _spaceNavigationService;
         private readonly IScoreService _scoreService;
+        private readonly ISoundService _soundService;
 
         private readonly List<IAsteroid> _asteroids = new();
-        
-        public AsteroidsController(IAsteroidsService asteroidsService, IAsteroidsSettings asteroidsSettings, ISpaceNavigationService spaceNavigationService, IScoreService scoreService)
+
+        public AsteroidsController(IAsteroidsService asteroidsService, IAsteroidsSettings asteroidsSettings,
+            ISpaceNavigationService spaceNavigationService, IScoreService scoreService, ISoundService soundService)
         {
             _asteroidsService = asteroidsService;
             _asteroidsSettings = asteroidsSettings;
             _spaceNavigationService = spaceNavigationService;
             _scoreService = scoreService;
+            _soundService = soundService;
         }
 
         public async UniTask Init()
@@ -74,13 +77,14 @@ namespace Migs.Asteroids.Game.Logic.Controllers
             foreach (var respawnData in asteroid.Data.RespawnedAsteroidsData)
             {
                 var updatedRotation = asteroid.Rotation * Quaternion.Euler(0, respawnData.RotationAngle, 0);
-                
+
                 SpawnAsteroid(respawnData.Level, asteroid.Position, updatedRotation, asteroid.CurrentSpeedMultiplier);
             }
         }
 
         private void DestroyAsteroid(IAsteroid asteroid)
         {
+            _soundService.PlayAsteroidExplosion();
             asteroid.Explode();
             ReleaseAsteroid(asteroid);
             _scoreService.AddScore(asteroid.Data.Points);

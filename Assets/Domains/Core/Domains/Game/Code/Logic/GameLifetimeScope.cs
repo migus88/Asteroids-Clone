@@ -28,7 +28,8 @@ namespace Migs.Asteroids.Game.Logic
         [SerializeField] private AsteroidsService _asteroidsService;
         [SerializeField] private ProjectilesService _projectilesService;
         [SerializeField] private SaucerService _saucerService;
-        
+        [SerializeField] private SoundService _soundService;
+
         [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private ProjectilesSettings _projectilesSettings;
@@ -53,6 +54,7 @@ namespace Migs.Asteroids.Game.Logic
             builder.RegisterComponent<IAsteroidsService>(_asteroidsService);
             builder.RegisterComponent<IProjectilesService>(_projectilesService);
             builder.RegisterComponent<ISaucerService>(_saucerService);
+            builder.RegisterComponent<ISoundService>(_soundService);
 
             builder.RegisterInstance(_playerSettings).As<IPlayerSettings>();
             builder.RegisterInstance(_asteroidsSettings).As<IAsteroidsSettings>();
