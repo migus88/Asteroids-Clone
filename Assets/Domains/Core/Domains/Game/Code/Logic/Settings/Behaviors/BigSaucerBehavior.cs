@@ -1,6 +1,5 @@
 using Migs.Asteroids.Core.Logic.Utils;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
-using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Settings.Behaviors

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Migs.Asteroids.Core.Logic.Services.Interfaces
 {
     public interface IPlayerInputService

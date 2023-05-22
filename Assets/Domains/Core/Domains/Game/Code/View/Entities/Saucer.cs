@@ -1,4 +1,3 @@
-using System;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Settings.Behaviors;
 using UnityEngine;

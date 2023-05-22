@@ -2,8 +2,6 @@ using System;
 using Migs.Asteroids.Core.Logic.Enums;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
 using Migs.Asteroids.Game.Input;
-using UnityEngine;
-using VContainer;
 
 namespace Migs.Asteroids.Game.Logic.Services
 {

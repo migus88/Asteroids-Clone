@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
-using Migs.Asteroids.UI.UI.Code.Logic.Interfaces;
+using Migs.Asteroids.UI.UI.Code.Logic.Interfaces.Controllers;
 using Migs.Asteroids.UI.UI.Code.Logic.Interfaces.Services;
 using VContainer.Unity;
 

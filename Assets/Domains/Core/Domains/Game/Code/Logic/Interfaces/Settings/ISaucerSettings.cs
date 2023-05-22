@@ -1,4 +1,3 @@
-using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Settings.Behaviors;
 
 namespace Migs.Asteroids.Game.Logic.Interfaces.Settings

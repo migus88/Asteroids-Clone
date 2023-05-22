@@ -1,11 +1,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading;
 using Cathei.LinqGen;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Settings;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Migs.Asteroids.Game.Logic.Services

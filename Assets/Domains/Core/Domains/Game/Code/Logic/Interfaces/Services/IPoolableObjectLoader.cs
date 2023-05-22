@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace Migs.Asteroids.Game.Logic.Interfaces.Services
 {

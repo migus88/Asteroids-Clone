@@ -2,7 +2,6 @@ using System;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Migs.Asteroids.Game.View.Entities
 {

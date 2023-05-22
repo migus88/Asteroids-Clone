@@ -1,9 +1,6 @@
-using System;
-using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Game.Data;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Migs.Asteroids.Game.View.Entities
 {

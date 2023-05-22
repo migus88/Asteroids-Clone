@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Migs.Asteroids.Core.Logic.Utils;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;

@@ -1,6 +1,5 @@
 using Migs.Asteroids.Core.Logic.Services;
 using Migs.Asteroids.Core.Logic.Services.Interfaces;
-using Migs.Asteroids.Core.Logic.Utils;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

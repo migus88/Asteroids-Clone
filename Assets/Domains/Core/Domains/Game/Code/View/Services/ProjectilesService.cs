@@ -6,7 +6,6 @@ using Migs.Asteroids.Core.Logic.Utils;
 using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Interfaces.Settings;
-using Migs.Asteroids.Game.Logic.Settings;
 using Migs.Asteroids.Game.Logic.Utils;
 using Migs.Asteroids.Game.View.Entities;
 using UnityEngine;

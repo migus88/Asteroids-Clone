@@ -7,7 +7,6 @@ using Migs.Asteroids.Game.Logic.Interfaces.Controllers;
 using Migs.Asteroids.Game.Logic.Interfaces.Managers;
 using Migs.Asteroids.Game.Logic.Interfaces.Services;
 using Migs.Asteroids.Game.Logic.Interfaces.Settings;
-using Migs.Asteroids.Game.Logic.Settings;
 using UnityEngine;
 using VContainer.Unity;
 using Random = UnityEngine.Random;

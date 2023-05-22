@@ -13,7 +13,6 @@ using Migs.Asteroids.Game.Logic.Settings;
 using Migs.Asteroids.Game.View.Entities;
 using Migs.Asteroids.Game.View.Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
