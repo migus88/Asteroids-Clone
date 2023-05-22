@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.cathei.linqgen": {
+      "version": "0.2.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.collections": "1.0.0"
+      },
+      "url": "https://package.openupm.com"
+    },
     "com.cysharp.unitask": {
       "version": "2.3.3",
       "depth": 0,
@@ -42,6 +51,16 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "1.2.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
