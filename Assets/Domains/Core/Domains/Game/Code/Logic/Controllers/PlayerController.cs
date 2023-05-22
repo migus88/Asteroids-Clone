@@ -48,7 +48,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public async UniTask Init()
         {
-            await _projectilesService.PreloadProjectiles(_projectilesSettings.PreloadAmount);
+            await _projectilesService.Preload(_projectilesSettings.PreloadAmount);
         }
 
         public void Tick()

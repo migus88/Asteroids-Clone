@@ -55,7 +55,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
 
         public void SpawnAsteroid(int level, Vector3 position, Quaternion rotation, float speedMultiplier = 1)
         {
-            var respawnedAsteroid = _asteroidsService.GetAvailableAsteroid();
+            var respawnedAsteroid = _asteroidsService.GetObject();
             respawnedAsteroid.Collided += OnAsteroidCollision;
             respawnedAsteroid.Spawn(_asteroidsSettings.AsteroidLevels[level], position, rotation, speedMultiplier);
             _asteroids.Add(respawnedAsteroid);
@@ -90,7 +90,7 @@ namespace Migs.Asteroids.Game.Logic.Controllers
         {
             asteroid.Collided -= OnAsteroidCollision;
             _asteroids?.Remove(asteroid);
-            _asteroidsService?.ReturnAsteroid(asteroid);
+            _asteroidsService?.ReturnObject(asteroid);
         }
 
         public void Dispose()

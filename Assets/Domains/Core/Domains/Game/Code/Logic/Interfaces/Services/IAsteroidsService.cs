@@ -3,10 +3,7 @@ using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 
 namespace Migs.Asteroids.Game.Logic.Interfaces.Services
 {
-    public interface IAsteroidsService
+    public interface IAsteroidsService : IPoolableObjectLoader<IAsteroid>
     {
-        UniTask Preload(int amount = 0);
-        IAsteroid GetAvailableAsteroid();
-        void ReturnAsteroid(IAsteroid asteroid);
     }
 }

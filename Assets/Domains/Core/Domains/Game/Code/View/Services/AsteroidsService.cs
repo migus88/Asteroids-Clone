@@ -39,8 +39,8 @@ namespace Migs.Asteroids.Game.View.Services
             ObjectPoolUtils.PreloadObject(_asteroids, amount);
         }
 
-        public IAsteroid GetAvailableAsteroid() => _asteroids.Get();
+        public IAsteroid GetObject() => _asteroids.Get();
 
-        public void ReturnAsteroid(IAsteroid asteroid) => _asteroids.Release((Asteroid)asteroid);
+        public void ReturnObject(IAsteroid asteroid) => _asteroids.Release((Asteroid)asteroid);
     }
 }

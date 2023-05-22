@@ -3,10 +3,8 @@ using Migs.Asteroids.Game.Logic.Interfaces.Entities;
 
 namespace Migs.Asteroids.Game.Logic.Interfaces.Services
 {
-    public interface IProjectilesService
+    public interface IProjectilesService : IPoolableObjectLoader<IProjectile>
     {
-        UniTask PreloadProjectiles(int amount = 0);
-
         IProjectile GetAvailablePlayerProjectile(int magazineSize);
         void ReturnPlayerProjectile(IProjectile projectile);
         

@@ -45,7 +45,8 @@ namespace Migs.Asteroids.Game.View.Services
             _projectilesSettings = projectilesSettings;
         }
 
-        public async UniTask PreloadProjectiles(int amount = 0)
+
+        public async UniTask Preload(int amount = 0)
         {
             if (!_projectilePrefab)
             {
@@ -75,10 +76,12 @@ namespace Migs.Asteroids.Game.View.Services
             return projectile;
         }
 
-        public void ReturnPlayerProjectile(IProjectile projectile) => ReturnProjectile(projectile);
-        public void ReturnEnemyProjectile(IProjectile projectile) => ReturnProjectile(projectile);
+        public void ReturnPlayerProjectile(IProjectile projectile) => ReturnObject(projectile);
+        public void ReturnEnemyProjectile(IProjectile projectile) => ReturnObject(projectile);
 
-        private void ReturnProjectile(IProjectile projectile)
+        public IProjectile GetObject() => _projectilesPool.Get();
+
+        public void ReturnObject(IProjectile projectile)
         {
             var projectileObj = (Projectile)projectile;
 
@@ -122,7 +125,7 @@ namespace Migs.Asteroids.Game.View.Services
             
             if(projectile.gameObject.activeSelf)
             {
-                ReturnProjectile(projectile);
+                ReturnObject(projectile);
             }
         }
 
